@@ -24,7 +24,7 @@
     <header>
       <!-- Fixed navbar -->
       <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-        <a class="navbar-brand" href="index.html">Traffic Light Uncertainty</a>
+        <a class="navbar-brand" href="index.html">Stochastic cancer</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -46,10 +46,10 @@
 
       <section class="jumbotron text-left">
         <div class="container">
-          <h1 class="jumbotron-heading">Optimal Driving Examples</h1>
+          <h1 class="jumbotron-heading">Optimal Adaptive Cancer Therapy in a Stochastic Setting Examples</h1>
           <div class="container bg-light">
             <p>These examples are from the following paper: </p>
-            <p><a class="btn btn-secondary" href="https://arxiv.org/abs/2201.04521" target="_blank" role="button">View manuscript on Arxiv &raquo;</a></p>
+            <p><a class="btn btn-secondary" href="https://github.com/eikonal-equation/Stochastic-Cancer" target="_blank" role="button">View manuscript on Arxiv &raquo;</a></p>
           </div>
         </div>
       </section>
@@ -57,40 +57,56 @@
         <p>
           All of the computations use the following parameters:
           <ul>
-            <li>Max allowed distance: \(\bar{d} = 100\) m </li>
-            <li>Traffic light location: \(d_{\ell} = 0\) m </li>
-            <li>Target location: \(d^* = -100\) m </li>
-            <li>Max allowed velocity: \(\bar{v} = 45\) mph \(\approx 20.12 m/s\) </li>
-            <li>Min allowed velocity: \(v = 0\) mph </li>
-            <li>Min acceleration: \(-\alpha = -3.8\) m/s/s </li>
-            <li>Max acceleration: \(\beta = +3.8\) m/s/s </li>
-            <li>Yellow light duration: \(D_Y = 3\) s </li>
-            <li>Red light duration: \(D_R = 60\) s </li>
+            <li>Benefit per unit of acidification: \(b_a = 2.5\) </li>
+            <li>Benefit from the oxygen per unit of vascularization: \(b_v = 2\) </li>
+            <li>Cost of production VEGF: \(c = 1\) </li>
+            <li>Number of cells in the interaction group: \((n+1) = 5\) </li>
+            <li>Maximum tolerated doses: \(d_{max} = 3\)  </li>
+            <li>Treatment time penalty: \(\delta = 0.05\) </li>
+            <li>Recovery barrier: \(r_b = 0.01\) </li>
+            <li>Failure barrier: \(1 - f_b = 0.99\) </li>
           </ul>
 
-        We conduct all of our examples / experiments on a \(345 \times 181\) grid in \((d,v)\) space.
+        We provide all examples on a \(1601 \times 1601 \times 6001\) grid in \((q,p,s)\) space.
         </p>
       </div>
 
-    <h2> Planning in the Indefinite Green Phase: </h2>
-      <div class="container bg-light">
-        <p><a class="btn btn-secondary" href="indef_green_phase_planning.html" role="button">Green Phase Planning &raquo;</a></p>
-    </div>
-
-    <h2> Planning in the Red and Green Phases: </h2>
-    <div class="container bg-light">
-      <p><a class="btn btn-secondary" href="red_phase_planning.html" role="button">Red Phase Planning &raquo;</a></p>
-    </div>
-
-    <h2> Planning in the Yellow, Red, and Green Phases: </h2>
-    <div class="container bg-light">
-      <p><a class="btn btn-secondary" href="yellow_phase_planning.html" role="button">Yellow Phase Planning &raquo;</a></p>
-    </div>
-
-    <h2> Planning in the Uncertain Green Phase: </h2>
-    <div class="container bg-light">
-      <p><a class="btn btn-secondary" href="uncertain_green_planning.html" role="button">Uncertain Green Phase Planning &raquo;</a></p>
-    </div>
+    <div class="album py-5 bg-light">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="card mb-6 shadow-sm">
+                <div class="card-body">
+                  <h4 class="card-text">Example 1 (small diffusion):</h4> 
+                  <ul>
+                    <li>\(\sigma_G = \sigma_D = \sigma_V = 0.15\)</li>
+                  </ul>
+                  <div class="embed-responsive embed-responsive-1by1">
+                    <video controls class="embed-responsive-item">
+                      <source src="movies/small_diffusion_fps20.mp4" type="video/mp4">
+                    </video>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="card mb-6 shadow-sm">
+                <div class="card-body">
+                  <h4 class="card-text">Example 2 (large diffusion):</h4> 
+                  <ul>
+                    <li>\(\sigma_G = \sigma_D = \sigma_V = 0.5\)</li>
+                  </ul>
+                  <div class="embed-responsive embed-responsive-1by1">
+                    <video controls class="embed-responsive-item">
+                      <source src="movies/large_diffusion_fps20.mp4" type="video/mp4">
+                    </video>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
     </main>
 
