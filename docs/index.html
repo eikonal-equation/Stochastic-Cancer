@@ -3,11 +3,11 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="Traffic Light Uncertainty">
-    <meta name="author" content="Mallory E. Gaspard">
+    <meta name="description" content="Stochastic cancer">
+    <meta name="author" content="MingYi Wang">
 <!--     <link rel="icon" href="../../../../favicon.ico"> -->
 
-    <title>Traffic Light Uncertainty</title>
+    <title>Stochastic optimization of adaptive cancer therapy</title>
 
     <!-- Bootstrap core CSS -->
    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
@@ -24,7 +24,7 @@
     <header>
       <!-- Fixed navbar -->
       <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-        <a class="navbar-brand" href="#">Traffic Light Uncertainty</a>
+        <a class="navbar-brand" href="#">Stochastic optimization of adaptive cancer therapy</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -43,35 +43,40 @@
 
     <!-- Begin page content -->
     <main role="main" class="container">
-      <h1 class="jumbotron-heading">Optimal Driving Under Traffic Light Uncertainty</h1>
+      <h1 class="jumbotron-heading">Stochastic optimal control to guide adaptive cancer therapy treatment</h1>
 
       <h2>Authors </h2>
       <div class="container bg-light">
       <ul>
-        <li> <a href="https://malloryegaspard.github.io/">Mallory E. Gaspard</a>, Cornell University </li>
+        <li> <a href="https://www.cam.cornell.edu/research/grad-students/mingyi-wang/">MingYi Wang</a>, Cornell University </li>
+	<li> <a href="https://www.lerner.ccf.org/thor/scott/lab/">Jacob G. Scott</a>, Cleveland Clinic </li>
         <li> <a href="http://pi.math.cornell.edu/~vlad">Alexander Vladimirsky</a>, Cornell University </li>
       </ul>
       </div>
 
       <h2>Abstract </h2>
         <div class="container bg-light">
-        <p> We study driver's optimal trajectory planning under uncertainty in the duration of a traffic light's green phase.
-            We interpret this as an optimal control problem with an objective of minimizing the expected cost based on the fuel use, discomfort from rapid velocity changes, and time to destination.
-            Treating this in the framework of dynamic programming, we show that the probability distribution on green phase durations gives rise to a sequence of Hamilton-Jacobi-Bellman PDEs,
-            which are then solved numerically to obtain optimal acceleration/braking policy in feedback form.
-            Our numerical examples illustrate the approach and highlight the role of conflicting goals and uncertainty in shaping drivers' behavior.
-        </p>
+        <p> While adaptive cancer therapy is beginning to prove a promising approach of building evolutionary dynamics into therapeutic scheduling, the stochastic nature of cancer evolution has rarely been incorporated.
+            Various sources of random perturbations can impact the evolution of heterogeneous tumors. 
+            We propose a method that can effectively select optimal adaptive treatment policies under randomly evolving tumor dynamics based on Stochastic Optimal Control theory. 
+            We first construct a stochastic model of cancer dynamics under drug therapy based on Evolutionary Game theory. 
+            That model is then used to improve the cumulative ``cost'', a combination of the total amount of drugs used and the time to recovery. 
+            As this cost becomes random in a stochastic setting, we maximize the probability of recovery under a pre-specified cost threshold (or a ``budget''). 
+            We can achieve our goal for a range of threshold values simultaneously using the tools of dynamic programming.
+            We then compare our threshold-aware policies with the policies previously shown to be optimal in the deterministic setting.
+            We show that this threshold-awareness yields a significant improvement in the probability of under-the-budget recovery, which is correlated with a lower general drug usage.
+       </p>
       </div>
       </p>
 
       <h2>Paper </h2>
       <div class="container bg-light">
-      <p><a class="btn btn-secondary" href="https://arxiv.org/abs/2201.04521" target="_blank" role="button">View manuscript on Arxiv &raquo;</a></p>
+      <p><a class="btn btn-secondary" href="https://github.com/eikonal-equation/Stochastic-Cancer"_blank" role="button">View manuscript on Arxiv &raquo;</a></p>
       </div>
 
       <h2>Source Code </h2>
       <div class="container bg-light">
-      <p><a class="btn btn-secondary" href="https://github.com/eikonal-equation/Traffic_Light_Uncertainty" target="_blank" role="button">View source code on Github &raquo;</a>
+      <p><a class="btn btn-secondary" href="https://github.com/eikonal-equation/Stochastic-Cancer" target="_blank" role="button">View source code on Github &raquo;</a>
       </p>
       </div>
 
@@ -84,13 +89,14 @@
       <h2>Acknowledgements </h2>
       <div class="container bg-light">
       <p>
-        The authors are grateful to April Nellis, Jacob van Hook, and Nhu Do for their preliminary work on the Phase R problem during the summer 2018 REU Program at Cornell University.
+	The authors would like to acknowledge Mark Gluzman, Artem Kaznatcheev, Robert Vander Velde, and David Basanta for their profound previous work.
 
-        The authors also thank Elliot Cartee for providing the website template.
+        The authors also thank Mallory E. Gaspard Elliot Cartee for providing the website template.
       </p>
       <p>
-        The 1st author's work is supported by a National Defense Science and Engineering Graduate (NDSEG) Fellowship.
-        The 2nd author's work is supported by the NSF DMS (awards 1645643, 1738010, 2111522).
+        The 1st author's work is supported by...
+        The 2nd author's work is supported by ...
+	The 3rd author's work is supported by ...
       </p>
       </div>
     </main>
