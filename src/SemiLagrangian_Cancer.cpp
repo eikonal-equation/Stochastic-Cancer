@@ -42,10 +42,7 @@ CancerSL::CancerSL(int a_Factor, double a_Budget, double a_Treatment_const, doub
 	fBudget = a_Budget;
 	fN = 100 * fMulti_factor;
 
-	//fM = int(500 * fMulti_factor * fBudget);
-    //fM = int(250 * fMulti_factor * fBudget); //for doubled ds
-    //fM = int(125 * fMulti_factor * fBudget); //for quadrupled ds
-    fM = int(125.0 / 2 * fMulti_factor * fBudget); //for octed ds
+        fM = int(125.0 / 2 * fMulti_factor * fBudget); //for octed ds
     
 
 	fDs = fBudget / fM;
