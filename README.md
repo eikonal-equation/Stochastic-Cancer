@@ -45,7 +45,7 @@ To generate a CDF with threshold-aware optimal policies:
   * CDF_threshold_aware_policy.m
       * Produces a CDF y = Pr(J <= s) that measures the probability of keeping the accumulative cost J under a given initial threshold/budget value s using threshold-aware policies. It will produce a plot of the CDF and a plot of a sample path at the end of execution. 
       * Note: it requires a data matrix of the deterministic-optimal policy and a multi-dimensional data array of the threshold-aware policies (with the same same spatial dimensions) as inputs. 
-          * E.g., a 1601x1601 data matrix for the deterministic-optimal policy and a 1601x1601x1201 multidimensional array for the threshold-aware policies.
+          - E.g., a 1601x1601 data matrix for the deterministic-optimal policy and a 1601x1601x1201 multidimensional array for the threshold-aware policies.
 
 To generate a CDF with the deterministic-optimal policy:
    * CDF_stationary_policy.m
