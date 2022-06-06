@@ -42,17 +42,17 @@ To delete the executable and the date files, type `make clean`.
 
 ## Running the Matlab Code: ##
 To generate a CDF with threshold-aware optimal policies:
-  * CDF_threshold_aware_policy.m
+  * `CDF_threshold_aware_policy.m`
       * Produces a CDF y = Pr(J <= s) that measures the probability of keeping the accumulative cost J under a given initial threshold/budget value s using threshold-aware policies. It will produce a plot of the CDF and a plot of a sample path at the end of execution. 
       * Note: it requires a data matrix of the deterministic-optimal policy and a multi-dimensional data array of the threshold-aware policies (with the same same spatial dimensions) as inputs. 
-          - E.g., a 1601x1601 data matrix for the deterministic-optimal policy and a 1601x1601x1201 multidimensional array for the threshold-aware policies.
+          * E.g., a 1601x1601 data matrix for the deterministic-optimal policy and a 1601x1601x1201 multidimensional array for the threshold-aware policies.
 
 To generate a CDF with the deterministic-optimal policy:
-   * CDF_stationary_policy.m
+   * `CDF_stationary_policy.m`
       * Produces a CDF y = Pr(J <= s) that measures the probability of success where the cumulative cost J is within any positive threshold value s using the stationary policy. It will produce a plot of the CDF and a superposed plot of a sample path together with the optimal policy in the background at the end of execution.
       * Note: it requires a data matrix of deterministic-optimal policy as an input.
 
 To generate the deterministic-optimal policy from [Gluzman et al.](https://royalsocietypublishing.org/doi/10.1098/rspb.2019.2454) (but with our own sets of parameter values):
-  * Deterministic_Cancer_ValuePolicy_Ite.m
+  * `Deterministic_Cancer_ValuePolicy_Ite.m`
       * Produces the determinstic-optimal policy matrix named "Dmat" and its corresponding value function matrix named "U".
       * Note: it requies the dimension of the desired output matrix as an input.
