@@ -35,3 +35,17 @@ footer {
 footer p {
   margin-bottom: .25rem;
 }
+
+#nav1
+{  
+    background-color:#0288D1; 
+    opacity: 0.8; 
+    filter:(opacity=80);       
+}
+.btn-secondary
+{
+
+  background-color:#0288D1 !important;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.62);
+}
+
