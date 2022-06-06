@@ -1,6 +1,6 @@
 % This function computes the value function of the deterministic
 % optimization problem of adaptive cancer therapy from Gluzman et al.
-% https://royalsocietypublishing.org/doi/10.1098/rspb.2019.2454)
+% https://royalsocietypublishing.org/doi/10.1098/rspb.2019.2454
 % in the following form:
 % u = max_d{tau*(dmax + delta) + u_interp} over d in {0,dmax}
 % We hence recover the optimal bang-bang policy in feedback form via a
