@@ -42,10 +42,17 @@ footer p {
     opacity: 0.8; 
     filter:(opacity=80);       
 }
+
 .btn-secondary
 {
 
   background-color:#0288D1 !important;
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.62);
+}
+
+.btn-outline-light {
+  border-radius: 4px !important;
+  font-size: 16px;
+  margin: 4px 2px;
 }
 
