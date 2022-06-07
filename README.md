@@ -4,7 +4,7 @@ A (soon to be) public repository with codes &amp; movies from our paper on envir
 
 This repository contains the source code used to generate all examples presented in "Stochastic optimal control to guide adaptive cancer therapy treatment" manuscript (both the main text and the Supplementary Materials) by MingYi Wang, Jacob G. Scott and Alexander Vladimirsky. 
 
-
+## Abstract of our manuscript ##
 While adaptive cancer therapy is beginning to prove a promising approach of building evolutionary dynamics into therapeutic scheduling, the stochastic nature of cancer evolution has rarely been incorporated. Various sources of random perturbations can impact the evolution of heterogeneous tumors. 
 We propose a method that can effectively select optimal adaptive treatment policies under randomly evolving tumor dynamics based on Stochastic Optimal Control theory. 
 We first construct a stochastic model of cancer dynamics under drug therapy based on Evolutionary Game theory. That model is then used to improve the cumulative "cost", a combination of the total amount of drugs used and the time to recovery. As this cost becomes random in a stochastic setting, we maximize the probability of recovery under a pre-specified cost threshold (or a "budget"). 
