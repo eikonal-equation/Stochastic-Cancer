@@ -34,9 +34,11 @@ The Stochastic Optimization of Adaptive Cancer Therapy manuscript can be found [
 * The CDFs and the deterministic-optimal policy are generated with Matlab code.
 
 ## Running the C++ Code: ##
-The following instructions explain how to run the Solver for threshold-aware optimal policy using the Makefile. 
+The following instructions explain how to run the Solver for threshold-aware optimal policy using the ***Makefile***. 
 
 To change compilers, edit `CC=` by putting your desired compiler after the `=` sign. The default compiler is set to `g++`. 
+
+To update the path/version of the "Boost" library you've installed, edit `BOOSTPATH` by putting your own path/version after the `=` sign. The current path/version is '../usr/local/boost_1_75_0`.
 
 To compile the code, type `make main` in the terminal at this folder. 
 
