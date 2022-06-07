@@ -27,7 +27,7 @@ The Stochastic Optimization of Adaptive Cancer Therapy manuscript can be found [
 # Instructions #
   
 ## Requirements: ## 
-* The C++ code requires the users to install the "Boost" library (external) in the `/usr/local/include` directory.
+* The C++ code requires the users to install the "[Boost](https://www.boost.org/)" library (external) in the `/usr/local/include` directory.
 
 * The CDFs and the deterministic-optimal policy are generated with Matlab code.
 
