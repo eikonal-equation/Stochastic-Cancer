@@ -1,6 +1,6 @@
 CC = g++
 CXXFLAGS = -std=c++17 -O3 -fopenmp
-BOOSTPATH = ../boost_1_75_0
+BOOSTPATH = ./boost_1_75_0
 INCLUDE = -I $(BOOSTPATH) -I ./include/
 LIB = -L $(BOOSTPATH)
 SRC = ./src/
