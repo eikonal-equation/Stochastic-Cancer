@@ -29,7 +29,7 @@ The Stochastic Optimization of Adaptive Cancer Therapy manuscript can be found [
 # Instructions #
   
 ## Requirements: ## 
-* The C++ code requires the users to install the "[Boost](https://www.boost.org/)" library (external) in the same directory where `include` and `src` locate.
+* The C++ code requires the users to install the "[Boost](https://www.boost.org/)" library (external). We install it in the same directory where `include` and `src` locate (feel free to install it anywhere you want on your end but you need to modify its path in the ***Makefile*** described below).
 
 * The CDFs and the deterministic-optimal policy are generated with Matlab code.
 
@@ -38,7 +38,7 @@ The following instructions explain how to run the Solver for threshold-aware opt
 
 To change compilers, edit `CC=` by putting your desired compiler after the `=` sign. The default compiler is set to `g++`. 
 
-To update the path/version of the "Boost" library you've installed, edit `BOOSTPATH` by putting your own path/version after the `=` sign. The current path/version is `../boost_1_75_0`.
+To update the path/version of the "Boost" library you've installed, edit `BOOSTPATH` by putting your own path/version after the `=` sign. The current path/version is `./boost_1_75_0`.
 
 To compile the code, type `make main` in the terminal at this folder. 
 
