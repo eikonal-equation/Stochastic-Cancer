@@ -59,5 +59,5 @@ To generate a CDF with the deterministic-optimal policy:
 
 To generate the deterministic-optimal policy from [Gluzman et al.](https://royalsocietypublishing.org/doi/10.1098/rspb.2019.2454) (but with our own sets of parameter values):
   * `Deterministic_Cancer_ValuePolicy_Ite.m`
-      * Produces the determinstic-optimal policy matrix named "Dmat" and its corresponding value function matrix named "U".
-      * Note: it requies the dimension of the desired output matrix as an input.
+      * Produces the determinstic-optimal policy matrix named `Dmat` and its corresponding value function matrix named `U`.
+      * Note: it requies the dimension of the desired output matrix `N` as an input.
