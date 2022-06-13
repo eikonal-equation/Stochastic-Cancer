@@ -45,7 +45,6 @@ footer p {
 
 .btn-secondary
 {
-
   background-color:#0288D1 !important;
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.62);
 }
@@ -54,5 +53,12 @@ footer p {
   border-radius: 4px !important;
   font-size: 16px;
   margin: 4px 2px;
+}
+
+.btn-xs {
+  padding: .25rem .4rem;
+  font-size: .875rem;
+  line-height: .5;
+  border-radius: .2rem;
 }
 
