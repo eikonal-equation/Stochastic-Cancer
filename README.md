@@ -48,13 +48,13 @@ To delete the executable and the date files, type `make clean`.
 ## Running the Matlab Code: ##
 To generate a CDF with threshold-aware optimal policies:
   * `CDF_threshold_aware_policy.m`
-      * Produces a CDF $ y=\mathbf{Pr}(\mathcal{J} \le s) $ that measures the probability of keeping the accumulative cost $ \mathcal{J} $ under any threshold value $ s $ but maximized at a given initial threshold/budget $ \bar{s} $ using threshold-aware policies. It will produce a plot of the CDF and a plot of a sample path at the end of execution. 
+      * Produces a CDF $y=\mathbf{Pr}(\mathcal{J} \le s)$ that measures the probability of keeping the accumulative cost $\mathcal{J}$ under any threshold value $s$ but maximized at a given initial threshold/budget $\bar{s}$ using threshold-aware policies. It will produce a plot of the CDF and a plot of a sample path at the end of execution. 
       * Note: it requires a data matrix of the deterministic-optimal policy and a multi-dimensional data array of the threshold-aware policies (with the same spatial dimensions) as inputs. 
           * E.g., a 1601x1601 data matrix for the deterministic-optimal policy and a 1601x1601x1201 multi-dimensional array for the threshold-aware policies.
 
 To generate a CDF with the deterministic-optimal policy:
    * `CDF_stationary_policy.m`
-      * Produces a CDF  $ y=\mathbf{Pr}(\mathcal{J} \le s) $ that measures the probability of success where the cumulative cost $ \mathcal{J} $ is within any positive threshold value $ s $ using the stationary policy. It will produce a plot of the CDF and a superposed plot of a sample path together with the optimal policy in the background at the end of execution.
+      * Produces a CDF  $y=\mathbf{Pr}(\mathcal{J} \le s)$ that measures the probability of success where the cumulative cost $\mathcal{J}$ is within any positive threshold value $s$ using the stationary policy. It will produce a plot of the CDF and a superposed plot of a sample path together with the optimal policy in the background at the end of execution.
       * Note: it requires a data matrix of deterministic-optimal policy as an input.
 
 To generate the deterministic-optimal policy from [Gluzman et al.](https://royalsocietypublishing.org/doi/10.1098/rspb.2019.2454) (but with our own sets of parameter values):
