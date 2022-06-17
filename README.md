@@ -48,7 +48,7 @@ To delete the executable and the date files, type `make clean`.
 ## Running the Matlab Code: ##
 To generate a CDF with threshold-aware optimal policies:
   * `CDF_threshold_aware_policy.m`
-      * Produces a CDF $y=\mathbf{Pr}(J\le s)$ that measures the probability of keeping the accumulative cost $J$ under any threshold value $s$ but maximized at a given initial threshold/budget \bar{s} using threshold-aware policies. It will produce a plot of the CDF and a plot of a sample path at the end of execution. 
+      * Produces a CDF $y=\mathbf{Pr}(J\le s)$ that measures the probability of keeping the accumulative cost $J$ under any threshold value $s$ but maximized at a given initial threshold/budget $\overline{s}$ using threshold-aware policies. It will produce a plot of the CDF and a plot of a sample path at the end of execution. 
       * Note: it requires a data matrix of the deterministic-optimal policy and a multi-dimensional data array of the threshold-aware policies (with the same spatial dimensions) as inputs. 
           * E.g., a 1601x1601 data matrix for the deterministic-optimal policy and a 1601x1601x1201 multi-dimensional array for the threshold-aware policies.
 
