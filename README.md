@@ -2,7 +2,7 @@
 A (soon to be) public repository with codes &amp; movies from our paper on environmental stochasticity in cancer models.
 
 
-This repository contains the source code used to generate all examples presented in "Stochastic optimal control to guide adaptive cancer therapy treatment" manuscript (both the main text and the Supplementary Materials) by MingYi Wang, Jacob G. Scott and Alexander Vladimirsky.
+This repository contains the source code used to generate all examples presented in "Stochastic optimal control to guide adaptive cancer therapy treatment" manuscript (both the main text and the Supplementary Materials) by MingYi Wang, Jacob G. Scott, and Alexander Vladimirsky.
 
 # License #
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version. This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
@@ -10,15 +10,20 @@ This program is free software: you can redistribute it and/or modify it under th
 You should have received a copy of the GNU General Public License along with this program. If not, see http://www.gnu.org/licenses/.
 
 ## Abstract of our manuscript ##
-While adaptive cancer therapy is beginning to prove a promising approach of building evolutionary dynamics into therapeutic scheduling, the stochastic nature of cancer evolution has rarely been incorporated. Various sources of random perturbations can impact the evolution of heterogeneous tumors.
+While adaptive cancer therapy is beginning to prove a promising approach of building evolutionary dynamics into therapeutic scheduling, the stochastic nature of cancer evolution has rarely been incorporated. Various sources of random perturbations can impact the evolution of heterogeneous tumors. In this paper, we propose a method that can effectively select optimal adaptive treatment policies under randomly evolving tumor dynamics based on Stochastic Optimal Control theory. 
 
-We propose a method that can effectively select optimal adaptive treatment policies under randomly evolving tumor dynamics based on Stochastic Optimal Control theory. 
-We first construct a stochastic model of cancer dynamics under drug therapy based on Evolutionary Game theory. That model is then used to improve the cumulative "cost", a combination of the total amount of drugs used and the time to recovery. As this cost becomes random in a stochastic setting, we maximize the probability of recovery under a pre-specified cost threshold (or a "budget"). 
+We first construct a stochastic model of cancer dynamics under drug therapy based on Evolutionary Game theory. 
+That model is then used to improve the cumulative "cost", a combination of the total amount of drugs used and the time to recovery. 
+As this cost becomes random in a stochastic setting, we maximize the probability of recovery under a pre-specified cost threshold (or a "budget"). 
+We can achieve our goal for a range of threshold values simultaneously using the tools of dynamic programming.
 
-We can achieve our goal for a range of threshold values simultaneously using the tools of dynamic programming. We then compare our threshold-aware policies with the policies previously shown to be optimal in the deterministic setting. We show that this threshold-awareness yields a significant improvement in the probability of under-the-budget recovery, which is correlated with a lower general drug usage.
+We then compare our threshold-aware policies with the policies previously shown to be optimal in the deterministic setting.
+We show that this threshold-awareness yields a significant improvement in the probability of under-the-budget recovery, which is correlated with a lower general drug usage.
+
+The particular model underlying our discussion has originated in [Kaznatcheev2017 et al.](https://www.nature.com/articles/bjc20175), but the presented approach is far more general and provides a new tool for optimizing adaptive therapies based on a broad range of stochastic cancer models.
 
 # Manuscript #
-The Stochastic Optimization of Adaptive Cancer Therapy manuscript can be found [here](https://github.com/eikonal-equation/Stochastic-Cancer).
+The "Stochastic Optimization of Adaptive Cancer Therapy" manuscript can be found [here](https://github.com/eikonal-equation/Stochastic-Cancer).
 
 # Contributions & Acknowledgements # 
   * The problem statement, the specific stochastic cancer dynamics, and the numerical scheme were developed by MingYi Wang, Jacob Scott, and Alexander Vladimirsky.
