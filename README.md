@@ -1,4 +1,4 @@
-# Optimal adaptive (stochastic) cancer therapy
+# Optimal cancer therapy under stochasticity
 This repository contains the source code used to generate all examples presented in "Stochastic optimal control to guide adaptive cancer therapy" manuscript (both the main text and the Supplementary Materials) by MingYi Wang, Jacob G. Scott, and Alexander Vladimirsky.
 
 # License #
