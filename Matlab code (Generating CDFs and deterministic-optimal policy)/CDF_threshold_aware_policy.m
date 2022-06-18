@@ -15,6 +15,9 @@
 %
 %Xcost (output): Array of the accumulative (random) cost of each sample path
 %
+% Author: MingYi Wang, Cornell University
+% Last Modified: 06/18/2022
+%
 function Xcost = CDF_threshold_aware_policy(Dmat_det,D_thres,Initial_budget,xloc,yloc,choice,sample_size)
 %% parameters
 N = length(Dmat_det)-1; %number of points along one side of spatial grid

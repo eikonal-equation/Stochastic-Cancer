@@ -16,6 +16,9 @@
 %(We assume the initial policy at (xloc,yloc) is found before executing
 %this function)
 %
+% Author: MingYi Wang, Cornell University
+% Last Modified: 06/18/2022
+%
 function Xcost = CDF_stationary_policy(Dmat_det,xloc,yloc,choice,sample_size)
 %% parameters
 N = length(Dmat_det)-1; %number of points along one side of spatial grid

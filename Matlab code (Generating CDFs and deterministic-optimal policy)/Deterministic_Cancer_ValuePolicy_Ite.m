@@ -14,6 +14,9 @@
 % U(output): a (N+1)x(N+1) matrix of the value function
 % Dmat (output): a (N+1)x(N+1) matrix of the optimal policy in feedback form
 %
+% Author: MingYi Wang, Cornell University
+% Last Modified: 06/18/2022
+%
 function  [U,Dmat] = Deterministic_Cancer_ValuePolicy_Ite(N)
 %% parameters
 dx = 1/N; %spatial discretization along one side of qp-square

@@ -7,6 +7,10 @@
 %x0(input): first point of the grid
 %
 %val(output): interpolated value
+%
+% Author: MingYi Wang, Cornell University
+% Last Modified: 06/18/2022
+%
 function val=LinearInterp(v,k,xloc,h,x0) 
 %use the stencil [x(k-1),x(k)] to compute the value. Note k>=2
 %Here x(k)=x0+(k-1)*h

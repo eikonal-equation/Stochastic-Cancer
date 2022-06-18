@@ -13,6 +13,10 @@
 %y0(input): y coordiante of the first point of the grid
 %N(input) : dimension of the input matrix minus 1
 %val(output): interpolated value
+%
+% Author: MingYi Wang, Cornell University
+% Last Modified: 06/18/2022
+%
 function val=BilinearInterp(v11,v12,v21,v22,xl,xr,yt,yb,xloc,yloc,dx,dy)
 %bilinear interpolation
 val= (yt-yloc)/dy*( (xr-xloc)/dx*v11 + (xloc-xl)/dx*v12)...
