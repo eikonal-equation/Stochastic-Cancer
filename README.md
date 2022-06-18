@@ -26,7 +26,7 @@ The "Stochastic optimal control to guide adaptive cancer therapy" manuscript can
   * The problem statement, the specific stochastic cancer dynamics, and the numerical scheme were developed by MingYi Wang, Jacob Scott, and Alexander Vladimirsky.
   * The implementation was carried out by MingYi Wang.
   * The manuscript was written by MingYi Wang, Jacob Scott, and Alexander Vladimirsky.
-  * The authors also acknowledge Mark Gluzman, Artem Kaznatcheev, Robert Vander Velde, and David Basanta for their profound previous work.
+  * The authors acknowledge Mark Gluzman, Artem Kaznatcheev, Robert Vander Velde, and David Basanta for their profound previous work. The authors are also grateful to Roberto Ferretti and Lars Grüne for their advice on some aspects of numerical methods used in this project.
 
 # Instructions #
   
