@@ -1,7 +1,4 @@
-# Stochastic-Cancer 
-A (soon to be) public repository with codes &amp; movies from our paper on environmental stochasticity in cancer models.
-
-
+# Stochastic optimal control to guide adaptive cancer therapy
 This repository contains the source code used to generate all examples presented in "Stochastic optimal control to guide adaptive cancer therapy" manuscript (both the main text and the Supplementary Materials) by MingYi Wang, Jacob G. Scott, and Alexander Vladimirsky.
 
 # License #
