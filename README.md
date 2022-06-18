@@ -2,7 +2,7 @@
 A (soon to be) public repository with codes &amp; movies from our paper on environmental stochasticity in cancer models.
 
 
-This repository contains the source code used to generate all examples presented in "Stochastic optimal control to guide adaptive cancer therapy treatment" manuscript (both the main text and the Supplementary Materials) by MingYi Wang, Jacob G. Scott, and Alexander Vladimirsky.
+This repository contains the source code used to generate all examples presented in "Stochastic optimal control to guide adaptive cancer therapy" manuscript (both the main text and the Supplementary Materials) by MingYi Wang, Jacob G. Scott, and Alexander Vladimirsky.
 
 # License #
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version. This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
@@ -23,7 +23,7 @@ We show that this threshold-awareness yields a significant improvement in the pr
 The particular model underlying our discussion has originated in [Kaznatcheev2017 et al.](https://www.nature.com/articles/bjc20175), but the presented approach is far more general and provides a new tool for optimizing adaptive therapies based on a broad range of stochastic cancer models.
 
 # Manuscript #
-The "Stochastic Optimization of Adaptive Cancer Therapy" manuscript can be found [here](https://github.com/eikonal-equation/Stochastic-Cancer).
+The "Stochastic optimal control to guide adaptive cancer therapy" manuscript can be found [here](https://github.com/eikonal-equation/Stochastic-Cancer).
 
 # Contributions & Acknowledgements # 
   * The problem statement, the specific stochastic cancer dynamics, and the numerical scheme were developed by MingYi Wang, Jacob Scott, and Alexander Vladimirsky.
