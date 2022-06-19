@@ -41,7 +41,7 @@ int main()
 	const int factor = 16;
 	const double budget = 6;
 	const double treatment_const = 0.05;
-	const double diff_const = 0.5;
+	const double diff_const = 0.15;
 
 	CancerSL Example(factor, budget, treatment_const, diff_const);
 	ublas::matrix<double> v = Example.MainSolver_by_SL();
