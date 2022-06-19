@@ -63,3 +63,9 @@ To generate the deterministic-optimal policy from [Gluzman et al.](https://royal
   * `Deterministic_Cancer_ValuePolicy_Ite.m`
       * Produces the determinstic-optimal policy matrix named `Dmat` and its corresponding value function matrix named `U`.
       * Note: it requies the dimension of the desired output matrix `N` as an input.
+
+Demonstration:
+  * `demo.m`
+      * A script used for demonstration purpose only. It shows how to parse the threshold-aware policy data file `test_policy.dat` (generated from our C++ code) into a multi-dimensional array in Matlab.
+      * The demonstration is set to use a coarse spatial grid (401x401). Hence, it will not produce a desirable accuracy. To reproduce the results shown in our paper, please refer to section 5S of our Supplementary Materials for implementation details.
+        
