@@ -1,3 +1,4 @@
+function Xcost = CDF_stationary_policy(Dmat_det,xloc,yloc,choice,sample_size)
 %This function computes the CDF y = Pr(J <= s) that measures the
 %probability of success where the cumulative cost J is within any positive
 %threshold value s using the stationary policy computed from Gluzman et al.
@@ -16,10 +17,6 @@
 %(We assume the initial policy at (xloc,yloc) is found before executing
 %this function)
 %
-% Author: MingYi Wang, Cornell University
-% Last Modified: 06/18/2022
-%
-function Xcost = CDF_stationary_policy(Dmat_det,xloc,yloc,choice,sample_size)
 %% parameters
 N = length(Dmat_det)-1; %number of points along one side of spatial grid
 dx = 1/N;
@@ -37,8 +34,8 @@ s=0.05;%treatment cost
 dmax=3;%MTD
 
 xx = linspace(0,1,N+1);
-ind_rec=length(0:dx:0.01);%row index of the recovery barrier
-ind_death=find(xx==0.99,1);%row index of the death barrier
+ind_rec=length(0:dx:0.01);%index for recovery barrier
+ind_death=find(xx==0.99,1);%index for death barrier
 
 %drift functions (deterministic portion) of the cancer dynamics
 fp = @(q,p,d) p*(1-p)*(ba/(n+1)-q*(bv-c)-d)-p*(s1^2*p-(s1^2*p^2+s2^2*(1-p)^2*(1-q)^2 ...
@@ -53,7 +50,7 @@ dtmax = 0.005/(dmax+s)/10;%1/10-th of 0.005 cost
 
 count_death=0; %initialize the number of deaths to 0
 
-tic
+% tic
 parfor ii = 1:sample_size
     cost=0; %accumulative cost
     ylist=[yloc];
@@ -213,7 +210,7 @@ parfor ii = 1:sample_size
         policy_cell{ii} = policy_list;
     end
 end
-t1 = toc
+% t1 = toc
 %% plotting the empirical CDF
 prob_death = count_death/sample_size;
 
@@ -222,13 +219,15 @@ figure
 plot(x_1,f_1,'b-','linewidth',2);
 hold on
 xline(median(Xcost),'b:','linewidth',2);
-xlim([2 7]);
+% xlim([2 7]);
 ylim([0 1]);
 
 ax = gca;
 ax.FontSize = 10;
 xlabel('overall cost (s)','Fontsize',15);
 ylabel('probability of success','Fontsize',15);
+lgd1 = legend('CDF','Median cost','location','northwest');
+lgd1.FontSize = 18;
 grid on;
 
 %% sample path visualization
@@ -311,7 +310,7 @@ else
     
 end
 
-plot(x(1),y(1),'mo','markersize',4.5,'linewidth',1.5);
+plot(x(1),y(1),'marker','o','MarkerFaceColor','m','MarkerEdgeColor','m','markersize',4.3);
 hold off
 axis equal
 text(-0.09,0,'VOP','FontSize',11);

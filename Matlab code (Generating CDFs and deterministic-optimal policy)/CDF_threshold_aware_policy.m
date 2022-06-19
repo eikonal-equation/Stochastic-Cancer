@@ -1,3 +1,4 @@
+function Xcost = CDF_threshold_aware_policy(Dmat_det,D_thres,Initial_budget,xloc,yloc,choice,sample_size)
 %This function computes the CDF y = Pr(J <= s) that measures the
 %probability of keeping the accumulative cost J under a given initial
 %threshold/budget value s using thresold-aware policies (paper name)
@@ -15,10 +16,6 @@
 %
 %Xcost (output): Array of the accumulative (random) cost of each sample path
 %
-% Author: MingYi Wang, Cornell University
-% Last Modified: 06/18/2022
-%
-function Xcost = CDF_threshold_aware_policy(Dmat_det,D_thres,Initial_budget,xloc,yloc,choice,sample_size)
 %% parameters
 N = length(Dmat_det)-1; %number of points along one side of spatial grid
 dx = 1/N;
@@ -36,8 +33,8 @@ s=0.05;%treatment cost
 dmax=3;%MTD
 
 xx = linspace(0,1,N+1);
-ind_rec=length(0:dx:0.01);%row index of the recovery barrier
-ind_death=find(xx==0.99,1);%row index of the death barrier
+ind_rec=length(0:dx:0.01);%index for recovery barrier
+ind_death=find(xx==0.99,1);%index for death barrier
 
 %drift functions (deterministic portion) of the cancer dynamics
 fp = @(q,p,d) p*(1-p)*(ba/(n+1)-q*(bv-c)-d)-p*(s1^2*p-(s1^2*p^2+s2^2*(1-p)^2*(1-q)^2 ...
@@ -45,14 +42,25 @@ fp = @(q,p,d) p*(1-p)*(ba/(n+1)-q*(bv-c)-d)-p*(s1^2*p-(s1^2*p^2+s2^2*(1-p)^2*(1-
 fq = @(q,p) q*(1-q)*(bv/(n+1)*(1+p+p^2+p^3+p^4)-c)+q*(1-q)*( (1-q)*s2^2-q*s3^2  );
 
 %% Monte Carlo initializations
-% set dt adaptively so for every time step
-%(according to what we saved, we have policy data for every 0.005 budget)
+if N >= 800
+    % set dt adaptively so for every time step
+    %(according to what we saved, we have policy data for every 0.005 budget)
 
-dt0 = 0.005/(s)/40; %travel 1/40-th of a slice when not using drugs
-dtmax = 0.005/(dmax+s)/10; %travel 1/10-th of a slice when at MTD rate
+    dt0 = 0.005/(s)/40; %travel 1/40-th of a slice when not using drugs
+    dtmax = 0.005/(dmax+s)/10; %travel 1/10-th of a slice when at MTD rate
 
-%uniform discretization of thresholds on [0,Initial_budget]
-budget_list = 0:0.005:Initial_budget;
+    %uniform discretization of thresholds on [0,Initial_budget]
+    budget_list = 0:0.005:Initial_budget;
+    
+else % for demo purpose, if N < 800, we have policy data for every 0.02 budget
+
+    dt0 = 0.02/(s)/40; %travel 1/40-th of a slice when not using drugs
+    dtmax = 0.02/(dmax+s)/10; %travel 1/10-th of a slice when at MTD rate
+
+    %uniform discretization of thresholds on [0,Initial_budget]
+    budget_list = 0:0.02:Initial_budget;
+
+end
 
 M = length(budget_list); %number of s-slices
 
@@ -373,7 +381,7 @@ prob_death = count_death/sample_size;
 [f_1,x_1] = ecdf(Xcost,'Function','cdf','Alpha',0.05,'Bounds','on');
 figure
 plot(x_1,f_1,'b-','linewidth',2);
-xlim([2 7]);
+% xlim([2 7]);
 ylim([0 1]);
 
 ax = gca;
@@ -409,7 +417,7 @@ end
 if ~isempty(after_max)
     plot(x(after_max),y(after_max),'y.','markersize',2.5,'linewidth',1.5);
 end
-plot(x(1),y(1),'mo','markersize',4.5,'linewidth',1.5);
+plot(x(1),y(1),'marker','o','MarkerFaceColor','m','MarkerEdgeColor','m','markersize',4.3);
 hold off
 axis equal
 text(-0.08,0,'VOP','FontSize',11);
