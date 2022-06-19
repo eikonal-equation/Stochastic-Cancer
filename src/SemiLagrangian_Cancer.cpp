@@ -385,10 +385,10 @@ ublas::matrix<double> CancerSL::MainSolver_by_SL()
     //io::writeToFile2D<double>(filename1,Vmat_old);
     //string filename2 = "strict dval 2D N=1600 s=6 s1=0.15 tol=1e-14.dat";
     //io::writeToFile2D<bool>(filename2,policy_mat); 
+	
     string filename1 = "test_valuefn.dat";
     io::writeToFile2D<double>(filename1,Vmat_old);
     string filename2 = "test_policy.dat";
-
     io::writeToFile2D<bool>(filename2,policy_mat); 
     
 
