@@ -336,6 +336,11 @@ N_plot = size(Xtri,1)-1;
 figure
 [AA,BB]=contourf(Xtri,Ytri,Dmat(1:N/N_plot:end,1:N/N_plot:end),[0 1]);
 set(BB,'LineColor','none');
+hold on %plotting the recovery/death barrier
+plot(linspace(0.4950,0.5050,3),[0.8574,0.8574,0.8574],'c:','linewidth',1.5);
+plot(linspace(0.005,0.99,100),0.0087*ones(1,100),'c:','linewidth',1.5);
+hold off
+
 axis equal
 axis([0 1 0 1])
 text(-0.09,0,'VOP','FontSize',11);
