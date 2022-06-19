@@ -6,29 +6,29 @@
 %
 % Due to demo purpose only, we will only use a coarse grid. Thus, the
 % results will NOT achieve high enough accuracy.
-% If you want to reproduce the results we show in our paper, please see 
+% If you want to reproduce the results we show in our paper, please see
 % section 5S of our Supplementary Materials for implementation details.
-% 
+%
 % Author: MingYi Wang, Cornell University
 % Last modified: 06/18/22
 %
- clear all;
- close all;
+clear all;
+close all;
 %% Generating the deterministic-optimal policy
 
 % we've used a 3201x3201 uniform grid on the unit qp-square in our actual
 % implementation. Here we are using a 401x401 grid as demo
-N_det = 400; 
+N_det = 400;
 
 % Call our given function to generate the deterministic-optimal policy
 tic
 [U,Dmat_det] = Deterministic_Cancer_ValuePolicy_Ite(N_det);
 t1 = toc;
 fprintf('The elapsed time of generating the det-optimal policy is %.3f seconds.\n',t1)
- %% Parse data file from running C++ code
+%% Parse data file from running C++ code
 
 % First, open the data file. We only provide a 401x401x301 threshold-aware
-% policy data file for demonstration. 
+% policy data file for demonstration.
 % In our actual implementation, we've always generated a 1601x1601x1201
 % policy date file.
 tic
@@ -49,7 +49,7 @@ choice = 'conservative';
 % demo purpose only. In our actual implementation, we've used 10^5 samples.
 sample_size = 10^3;
 % Call our function to generate the CDF
-tic 
+tic
 Xcost_stationary = CDF_stationary_policy(Dmat_det,xloc,yloc,choice,sample_size);
 t4 = toc;
 fprintf('The elapsed time of generating the CDF with det-optimal policy is %.3f seconds.\n',t4)

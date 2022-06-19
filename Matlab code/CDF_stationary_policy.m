@@ -56,19 +56,19 @@ parfor ii = 1:sample_size
     ylist=[yloc];
     xlist=[xloc];
     w1=[0];w2=[0];w3=[0];%the 3D Brownian motion starts at (0,0,0)
-    
+
     %initial policy (assuming known)
     policy = 0;
     %     policy = dmax
-    
+
     dmax_set=[];
     d0_set=[1];
     policy_list=[policy];
-    
-    
+
+
     %     dt=dtmax;
     dt=dt0;
-    
+
     j=1;
     while ylist(j) > 0.01
         j=j+1;
@@ -84,9 +84,9 @@ parfor ii = 1:sample_size
             yval*(1-yval)*(1-xval)*s2*(w2(j)-w2(j-1))+...
             yval*(1-yval)*xval*s3*(w3(j)-w3(j-1));
         xlist(j) = xval+fq(xval,yval)*dt+xval*(1-xval)*(s3*(w3(j)-w3(j-1))-s2*(w2(j)-w2(j-1)));
-        
+
         cost=cost+(policy+s)*dt; %accumulating cost
-        
+
         %if we cross the failure barrier, stop
         if ylist(j) > 0.99
             count_death = count_death+1;
@@ -94,12 +94,12 @@ parfor ii = 1:sample_size
             cost = 10^6;
             break
         end
-        
+
         if ylist(j) >= 0.01
             %find the indices of the current position on the grid
             kq=find(xlist(j)<=xx',1);
             kp=find(ylist(j)<=xx',1);
-            
+
             %----------Determination of the policy at next step----------------
             if (kp == (ind_death)) %if we are just below the death barrier
                 d3 = Dmat_det(kp,kq-1);d4 = Dmat_det(kp,kq);
@@ -108,12 +108,12 @@ parfor ii = 1:sample_size
                         %super-conservative determination strategy
                         if ((d3+ d4) == 2)
                             policy = dmax;
-                            
+
                             dmax_set=[dmax_set,j];
                             dt = dtmax;
                         else
                             policy = 0;
-                            
+
                             d0_set=[d0_set,j];
                             dt = dt0;
                         end
@@ -122,12 +122,12 @@ parfor ii = 1:sample_size
                         %super-aggressive determination strategy
                         if ((d3 + d4) > 0)
                             policy = dmax;
-                            
+
                             dmax_set=[dmax_set,j];
                             dt = dtmax;
                         else
                             policy = 0;
-                            
+
                             d0_set=[d0_set,j];
                             dt = dt0;
                         end
@@ -136,12 +136,12 @@ parfor ii = 1:sample_size
                         %vote by majority determination strategy
                         if ((d3 + d4) > 0)
                             policy = dmax;
-                            
+
                             dmax_set=[dmax_set,j];
                             dt = dtmax;
                         else
                             policy = 0;
-                            
+
                             d0_set=[d0_set,j];
                             dt = dt0;
                         end
@@ -153,18 +153,18 @@ parfor ii = 1:sample_size
                 d1=Dmat_det(kp-1,kq-1);d2=Dmat_det(kp-1,kq);
                 d3=Dmat_det(kp,kq-1);d4=Dmat_det(kp,kq);
                 d_square=[d1,d2,d3,d4];
-                
+
                 switch choice
                     case 'conservative'
                         %super-conservative determination strategy
                         if sum(d_square)== 4
                             policy = dmax;
-                            
+
                             dmax_set=[dmax_set,j];
                             dt = dtmax;
                         else
                             policy = 0;
-                            
+
                             d0_set=[d0_set,j];
                             dt = dt0;
                         end
@@ -173,12 +173,12 @@ parfor ii = 1:sample_size
                         %super-aggressive determination strategy
                         if sum(d_square) > 0
                             policy = dmax;
-                            
+
                             dmax_set=[dmax_set,j];
                             dt=dtmax;
                         else
                             policy = 0;
-                            
+
                             d0_set=[d0_set,j];
                             dt=dt0;
                         end
@@ -187,12 +187,12 @@ parfor ii = 1:sample_size
                         %vote by majority determination strategy
                         if sum(d_square)>=3
                             policy = dmax;
-                            
+
                             dmax_set=[dmax_set,j];
                             dt=dtmax;
                         else
                             policy = 0;
-                            
+
                             d0_set=[d0_set,j];
                             dt=dt0;
                         end
@@ -232,31 +232,54 @@ grid on;
 
 %% sample path visualization
 %-----------set up tenary coordiantes---------------
-NN=800;
-ratio = N/NN;
-q=linspace(0,1,NN+1);
-p=linspace(0,1,NN+1);
-x1=[];x2=[];x3=[];
+if N >= 800 %if N >= 800, we suggest downsampling it to 801x801
+    NN = 800;
+    q=linspace(0,1,NN+1);
+    p=linspace(0,1,NN+1);
 
-for i=1:1:NN+1
-    x1ij=p(i)*ones(1,NN+1);
-    x2ij=(1-p(i))*(1-q);
-    x3ij=1-x1ij-x2ij;
-    x1=[x1 x1ij];
-    x2=[x2 x2ij];
-    x3=[x3 x3ij];
- end
+    %covert the qp-square into GLY-DEF-VOP triangle
+    x1=[];x2=[];x3=[];
+    for ii=1:1:NN+1
+        x1ij=p(ii)*ones(1,NN+1);
+        x2ij=(1-p(ii))*(1-q);
+        x3ij=1-x1ij-x2ij;
+        x1=[x1 x1ij];
+        x2=[x2 x2ij];
+        x3=[x3 x3ij];
+    end
+    [x, y] = terncoords(x3, x2, x1);
 
-[x, y] = terncoords(x3, x2, x1);
 
-K=NN;
-Xtri=zeros(K+1,K+1); Ytri=zeros(K+1,K+1);
-for j=1:K+1
-    Xtri(j,1:K+1)= x(K*(j-1)+j:K*(j-1)+j+K);
-    Ytri(j,1:K+1)= y(K*(j-1)+j:K*(j-1)+j+K);
+    Xtri=zeros(NN+1,NN+1); Ytri=zeros(NN+1,NN+1);
+    for jj=1:NN+1
+        Xtri(jj,1:NN+1)=x(NN*(jj-1)+jj:NN*(jj-1)+jj+NN);
+        Ytri(jj,1:NN+1)=y(NN*(jj-1)+jj:NN*(jj-1)+jj+NN);
+    end
+else
+    q=linspace(0,1,N+1);
+    p=linspace(0,1,N+1);
+    %covert the qp-square into GLY-DEF-VOP triangle
+    x1=[];x2=[];x3=[];
+    for ii=1:1:N+1
+        x1ij=p(ii)*ones(1,N+1);
+        x2ij=(1-p(ii))*(1-q);
+        x3ij=1-x1ij-x2ij;
+        x1=[x1 x1ij];
+        x2=[x2 x2ij];
+        x3=[x3 x3ij];
+    end
+    [x, y] = terncoords(x3, x2, x1);
+
+
+    Xtri=zeros(N+1,N+1); Ytri=zeros(N+1,N+1);
+    for jj=1:N+1
+        Xtri(jj,1:N+1)=x(N*(jj-1)+jj:N*(jj-1)+jj+N);
+        Ytri(jj,1:N+1)=y(N*(jj-1)+jj:N*(jj-1)+jj+N);
+    end
 end
 
 %-------------select a sample path from stored ones-----------------------
+N_plot = size(Xtri,1)-1;
 indxx = 1;
 ylist = path_y{indxx};
 xlist = path_x{indxx};
@@ -280,8 +303,7 @@ switchset = [switchset length(policy_list)];
 
 figure
 hold on
-% fill([0 1 0.5 0],[0 0 0.866 0],'w-','linewidth',1);
-[AA,BB]=contourf(Xtri,Ytri,Dmat_det(1:ratio:end,1:ratio:end),[0,1]);
+[AA,BB]=contourf(Xtri,Ytri,Dmat_det(1:N/N_plot:end,1:N/N_plot:end),[0 1]);
 set(BB,'LineColor','none');
 
 plot(linspace(0.4950,0.5050,3),[0.8574,0.8574,0.8574],'c:','linewidth',1.5);
@@ -292,22 +314,22 @@ for i = 2:length(switchset)-1
     if policy_list(indxxx) == 0
         plot(x(switchset(i-1):switchset(i)),y(switchset(i-1):switchset(i)),...
             'r-','markersize',2,'linewidth',1.5);
-        
+
     else
         plot(x(switchset(i-1):switchset(i)),y(switchset(i-1):switchset(i)),...
             'g-','markersize',2,'linewidth',1.5);
-        
+
     end
 end
 
 if policy_list(end) == 0
     plot(x(switchset(end-1):end),y(switchset(end-1):end),...
         'g-','markersize',2,'linewidth',1.5);
-    
+
 else
     plot(x(switchset(end-1):end),y(switchset(end-1):end),...
         'r-','markersize',2,'linewidth',1.5);
-    
+
 end
 
 plot(x(1),y(1),'marker','o','MarkerFaceColor','m','MarkerEdgeColor','m','markersize',4.3);

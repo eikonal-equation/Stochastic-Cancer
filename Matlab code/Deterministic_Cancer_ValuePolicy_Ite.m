@@ -83,7 +83,7 @@ while err>tol
             iOrder=(ind_death):-1:(ind_rec);
             jOrder=1:1:N+1;
     end
-    
+
     for i = iOrder
         for j = jOrder
             %Since we have the bang-bang property, we only have d=0 or
@@ -93,43 +93,43 @@ while err>tol
             x1p=XP1(i,j);
             kq=KQ1(i,j);
             kp=KP1(i,j);
-            
+
             if j==1 % on q = 0
                 uij1 = LinearInterp(U(:,1),kp,x1p,dy,0);
             elseif j==N+1 %on q = 1
                 uij1= LinearInterp(U(:,N+1),kp,x1p,dy,0);
-                
+
             else %in the interior
                 ql= xx(kq-1);qr=xx(kq);pb=xx(kp-1);pt=xx(kp);
                 u11=U(kp-1,kq-1);u12=U(kp-1,kq);
                 u21=U(kp,kq-1);u22=U(kp,kq);
                 uij1 = BilinearInterp(u11,u12,u21,u22,ql,qr,pt,pb,x1q,x1p,dx,dy);
-                
+
             end
             u1 = tau*s+uij1; %running cost + interpolated value
-            
-            
+
+
             %Next, we consider the case when d = dmax (MTD rate)
             x2q=XQ2(i,j);
             x2p=XP2(i,j);
             kq=KQ2(i,j);
             kp=KP2(i,j);
-            
-            
+
+
             if j==1 %on q = 0
                 uij2 = LinearInterp(U(:,1),kp,x2p,dy,0);
             elseif j==N+1 %on q = 1
                 uij2= LinearInterp(U(:,N+1),kp,x2p,dy,0);
-                
+
             else %in the interior
                 ql=xx(kq-1);qr=xx(kq);pb=xx(kp-1);pt=xx(kp);
                 u11=U(kp-1,kq-1);u12=U(kp-1,kq);
                 u21=U(kp,kq-1);u22=U(kp,kq);
                 uij2 = BilinearInterp(u11,u12,u21,u22,ql,qr,pt,pb,x2q,x2p,dx,dy);
-                
+
             end
             u2 = tau*(dmax+s)+uij2; %running cost + interpolated value
-            
+
             unew=min(u1,u2); %take the smaller value
             if u1<=u2
                 d_new = 0;
@@ -147,7 +147,7 @@ while err>tol
         errlist(kk+1) = max(max(abs(uold-U)));
         err = errlist(kk+1);
     end
-    
+
     k
     Inf_Norm_per_ite = max(max(abs(uold-U)))
     if (k > 3) && (mod(k,4) == 3)
@@ -156,56 +156,56 @@ while err>tol
             kk = kk+1
             errlist(kk+1)=diff;
             err = diff;
-            
+
             %------------------"policy-update"----------------------------
             u_vec = U(:); %convert the value function to be a long vector
             d_vec = Dmat(:); %convert the policy matrix to be a long vector
             b_vec = zeros(1,(N+1)*(N+1)); %initialize b vector
-            
+
             [column,row]=meshgrid(1:N+1,1:N+1);
             xloc_mat = zeros(N+1,N+1);
             yloc_mat = zeros(N+1,N+1);
             kx_mat= zeros(N+1,N+1);
             ky_mat = zeros(N+1,N+1);
             tau_mat = zeros(N+1,N+1);
-            
+
             %first, take care of the ones on the diagonal
             I = 1:(N+1)*(N+1);
             J = 1:(N+1)*(N+1);
             V = ones(1, (N+1)*(N+1));
-            
+
             %finding nodes where d=0 or d=dmax
             test_mtd = (Dmat==dmax);
             test_0 = (Dmat==0);
-            
+
             %find locations and coefficients for d=dmax case
             xloc_mat(test_mtd) = XQ2(test_mtd);
             yloc_mat(test_mtd) = XP2(test_mtd);
             kx_mat(test_mtd)= KQ2(test_mtd);
             ky_mat(test_mtd) = KP2(test_mtd);
-            
-            
+
+
             %find locations and coefficients for d=0 case
             xloc_mat(test_0) = XQ1(test_0);
             yloc_mat(test_0) = XP1(test_0);
             kx_mat(test_0)= KQ1(test_0);
             ky_mat(test_0) = KP1(test_0);
-            
+
             %Taking care of Boundary conditions
             test_u0 = (U==0);
             node_index = (reshape(column(test_u0), 1,[])-1)*(N+1) + reshape(row(test_u0), 1,[]);
             b_vec(node_index) = u_vec(node_index);
-            
+
             test_largenum = (U>=largeNum);
             node_index = (reshape(column(test_largenum), 1,[])-1)*(N+1) + reshape(row(test_largenum), 1,[]);
             b_vec(node_index) = u_vec(node_index);
-            
+
             test_ky0 = (ky_mat == 0);
             node_index = (reshape(column(test_ky0), 1,[])-1)*(N+1) + reshape(row(test_ky0), 1,[]);
             b_vec(node_index) = u_vec(node_index);
-            
+
             t_int = ~(test_u0 | test_largenum | test_ky0);
-            
+
             %Taking care the case on q = 0
             t = (t_int & (xloc_mat == 0));
             node_index = (reshape(column(t), 1,[])-1)*(N+1) + reshape(row(t), 1,[]);
@@ -213,9 +213,9 @@ while err>tol
             ky = ky_mat(t);
             yb = xx(ky-1);
             yt = xx(ky);
-            
-            
-            
+
+
+
             col_indx1 = ky-1;
             col_indx2 = ky;
             weight1 = -(yt-yloc)/dy;%weights of linear interpolation in 1D
@@ -224,8 +224,8 @@ while err>tol
             J = [J col_indx1' col_indx2'];
             V = [V weight1 weight2];
             b_vec(node_index) = tau.*(d_vec(node_index)+s);
-            
-            
+
+
             %Taking care the case on q = 1
             t = (t_int & (xloc_mat == 1));
             node_index = (reshape(column(t), 1,[])-1)*(N+1) + reshape(row(t), 1,[]);
@@ -233,8 +233,8 @@ while err>tol
             ky = ky_mat(t);
             yb = xx(ky-1);
             yt = xx(ky);
-            
-            
+
+
             col_indx1 = N*(N+1)+(ky-1);
             col_indx2 = N*(N+1)+ky;
             weight1 = -(yt-yloc)/dy;%weights of linear interpolation in 1D
@@ -243,8 +243,8 @@ while err>tol
             J = [J col_indx1' col_indx2'];
             V = [V weight1 weight2];
             b_vec(node_index) = tau.*(d_vec(node_index)+s);
-            
-            
+
+
             %Taking care of the interior
             t = (t_int &  ~((xloc_mat==0) | (xloc_mat==1)));
             node_index = (reshape(column(t), 1,[])-1)*(N+1) + reshape(row(t), 1,[]);
@@ -252,9 +252,9 @@ while err>tol
             yloc = yloc_mat(t)';
             kx = kx_mat(t);
             ky = ky_mat(t);
-            
-            
-            
+
+
+
             xl=xx(kx-1);
             xr=xx(kx);
             yb=xx(ky-1);
@@ -272,9 +272,9 @@ while err>tol
             J = [J col_indx1' col_indx2' col_indx3' col_indx4'];
             V = [V weight1 weight2 weight3 weight4];
             b_vec(node_index) = tau.*(d_vec(node_index)+s);
-            
+
             A = sparse(I,J,V,(N+1)*(N+1),(N+1)*(N+1));
-            
+
             u_true = A\b_vec';
             U = reshape(u_true,[N+1 N+1]);
         end
@@ -288,7 +288,7 @@ if N >= 800 %if N >= 800, we suggest downsampling it to 801x801
     NN = 800;
     q=linspace(0,1,NN+1);
     p=linspace(0,1,NN+1);
-    
+
     %covert the qp-square into GLY-DEF-VOP triangle
     x1=[];x2=[];x3=[];
     for ii=1:1:NN+1
@@ -300,8 +300,8 @@ if N >= 800 %if N >= 800, we suggest downsampling it to 801x801
         x3=[x3 x3ij];
     end
     [x, y] = terncoords(x3, x2, x1);
-    
-    
+
+
     Xtri=zeros(NN+1,NN+1); Ytri=zeros(NN+1,NN+1);
     for jj=1:NN+1
         Xtri(jj,1:NN+1)=x(NN*(jj-1)+jj:NN*(jj-1)+jj+NN);
@@ -321,8 +321,8 @@ else
         x3=[x3 x3ij];
     end
     [x, y] = terncoords(x3, x2, x1);
-    
-    
+
+
     Xtri=zeros(N+1,N+1); Ytri=zeros(N+1,N+1);
     for jj=1:N+1
         Xtri(jj,1:N+1)=x(N*(jj-1)+jj:N*(jj-1)+jj+N);
@@ -336,7 +336,7 @@ N_plot = size(Xtri,1)-1;
 figure
 [AA,BB]=contourf(Xtri,Ytri,Dmat(1:N/N_plot:end,1:N/N_plot:end),[0 1]);
 set(BB,'LineColor','none');
-hold on 
+hold on
 plot(linspace(0.4950,0.5050,3),[0.8574,0.8574,0.8574],'c:','linewidth',1.5);
 plot(linspace(0.005,0.99,100),0.0087*ones(1,100),'c:','linewidth',1.5);
 hold off
@@ -378,7 +378,7 @@ set(findall(gca,'type','text'),'visible','on');
         KP2=zeros(N+1,N+1);
         KQ1=zeros(N+1,N+1);
         KQ2=zeros(N+1,N+1);
-        
+
         %create a uniform grid on [0,1]x[0,1]
         q = linspace(0,1,N+1);
         p = q;
@@ -386,13 +386,13 @@ set(findall(gca,'type','text'),'visible','on');
             for j=1:N+1
                 %Since we have bang-bang property, we only consider two
                 %controls: d=0 or d=dmax=3 exclusively
-                
+
                 %We first compute the foot of characteristics for d=0
                 fx1 = fq(q(j),p(i));
                 fy1 = fp(q(j),p(i),0);
                 q_ij1 = q(j)+tau*fx1;
                 p_ij1 = p(i)+tau*fy1;
-                
+
                 %compute the coefficients
                 kq = find(q_ij1<=q',1);
                 kp = find(p_ij1<=p',1);
@@ -401,8 +401,8 @@ set(findall(gca,'type','text'),'visible','on');
                 KP1(i,j) = kp;
                 XQ1(i,j) = q_ij1;
                 XP1(i,j) = p_ij1;
-                
-                
+
+
                 %Repeat the process for d = damx
                 fx2 = fx1; %since drugs don't affect the dynamics in q-direction
                 fy2 = fp(q(j),p(i),dmax);
@@ -410,7 +410,7 @@ set(findall(gca,'type','text'),'visible','on');
                 p_ij2 = p(i)+tau*fy2;
                 kq = find(q_ij2<=q',1);
                 kp = find(p_ij2<=p',1);
-                
+
                 KQ2(i,j)=kq;
                 KP2(i,j)=kp;
                 XQ2(i,j)=q_ij2;

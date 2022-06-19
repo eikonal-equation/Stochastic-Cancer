@@ -51,7 +51,7 @@ if N >= 800
 
     %uniform discretization of thresholds on [0,Initial_budget]
     budget_list = 0:0.005:Initial_budget;
-    
+
 else % for demo purpose, if N < 800, we have policy data for every 0.02 budget
 
     dt0 = 0.02/(s)/40; %travel 1/40-th of a slice when not using drugs
@@ -381,7 +381,7 @@ prob_death = count_death/sample_size;
 [f_1,x_1] = ecdf(Xcost,'Function','cdf','Alpha',0.05,'Bounds','on');
 figure
 plot(x_1,f_1,'b-','linewidth',2);
-% xlim([2 7]);
+xlim([1 9]);
 ylim([0 1]);
 
 ax = gca;
