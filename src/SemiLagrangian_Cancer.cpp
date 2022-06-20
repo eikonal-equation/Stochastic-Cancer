@@ -757,7 +757,7 @@ ublas::matrix<double> CancerSL::MainSolver_by_SL()
 
                     if ((v1 >= v2) || ((std::abs(v1-v2)/min(v1,v2)) < tol))
 					{
-                        // if the difference is small, we don't use drugs
+                                        	// if the difference is small, we don't use drugs
 						policy_mat(i, j) = 0;
 					}
 					else
