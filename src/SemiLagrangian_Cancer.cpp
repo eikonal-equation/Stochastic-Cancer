@@ -497,7 +497,7 @@ ublas::matrix<double> CancerSL::MainSolver_by_SL()
 							{
 								first_col[i] = Vmat_old(i + ky_list[m] - 3, 0);
 							}
-                            // 3rd-order ENO interpolation in 1D
+                                                        // 3rd-order ENO interpolation in 1D
 							hat_v[m] = myENOgrid1D_y.ENO3_interp_1d(first_col, ky_list[m], hat_y[m]);
 						}
 					}
@@ -543,7 +543,7 @@ ublas::matrix<double> CancerSL::MainSolver_by_SL()
 
 					if ((v1 >= v2) || ((std::abs(v1-v2)/min(v1,v2)) < tol))
 					{
-                        // if the difference is small, we don't use drugs
+                                            // if the difference is small, we don't use drugs
 					    policy_mat(i, j) = 0;
 					}
 					else
@@ -621,9 +621,9 @@ ublas::matrix<double> CancerSL::MainSolver_by_SL()
 
 					Vmat_current(i, j) = max(v1, v2); //take the larger value
 					
-                    if ((v1 >= v2) || ((std::abs(v1-v2)/min(v1,v2)) < tol))
+                                        if ((v1 >= v2) || ((std::abs(v1-v2)/min(v1,v2)) < tol))
 					{
-                        // if the difference is small, we don't use drugs
+                                        	// if the difference is small, we don't use drugs
 						policy_mat(i, j) = 0;
 					}
 					else
@@ -655,7 +655,7 @@ ublas::matrix<double> CancerSL::MainSolver_by_SL()
 							if (hat_x[m] < 0)
 							{
 								// if it diffuses outside q=0, we just project it onto q=0 (never observed actually)
-                                hat_x[m] = 0;
+                                                                hat_x[m] = 0;
 
 								array<double, 6> first_col;
 								for (int i = 0; i < 6; i++)
@@ -668,7 +668,7 @@ ublas::matrix<double> CancerSL::MainSolver_by_SL()
 							else if (hat_x[m] > 1)
 							{
 								// if it diffuses outside q=1, we just project it onto q=1 (never observed actually)
-                                hat_x[m] = 1;
+                                                                hat_x[m] = 1;
 
 								array<double, 6> last_col;
 								for (int i = 0; i < 6; i++)
@@ -714,7 +714,7 @@ ublas::matrix<double> CancerSL::MainSolver_by_SL()
 							if (hat_x[m] < 0)
 							{
 								// if it diffuses outside q=0, we just project it onto q=0 (never observed actually)
-                                hat_x[m] = 0;
+                                                                hat_x[m] = 0;
 
 								array<double, 6> first_col;
 								for (int i = 0; i < 6; i++)
@@ -727,7 +727,7 @@ ublas::matrix<double> CancerSL::MainSolver_by_SL()
 							else if (hat_x[m] > 1)
 							{
 								// if it diffuses outside q=1, we just project it onto q=1 (never observed actually)
-                                hat_x[m] = 1;
+                                                                hat_x[m] = 1;
 
 								array<double, 6> last_col;
 								for (int i = 0; i < 6; i++)
@@ -755,7 +755,7 @@ ublas::matrix<double> CancerSL::MainSolver_by_SL()
 
 					Vmat_current(i, j) = max(v1, v2); //take the larger value
 
-                    if ((v1 >= v2) || ((std::abs(v1-v2)/min(v1,v2)) < tol))
+                                        if ((v1 >= v2) || ((std::abs(v1-v2)/min(v1,v2)) < tol))
 					{
                                         	// if the difference is small, we don't use drugs
 						policy_mat(i, j) = 0;
