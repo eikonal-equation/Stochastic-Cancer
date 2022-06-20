@@ -33,8 +33,8 @@ fprintf('The elapsed time of generating the det-optimal policy is %.3f seconds.\
 % policy date file.
 tic
 fileId = fopen('test_policy.dat');
-D_MultArr = fread(fileId,'uint8');
-D_MultArr = reshape(D_MultArr,[401,401,301]);
+D_MultArr = fread(fileId,'uint8'); % we've stored the optimal policy as either 0 or 1 ("bool" in C++)
+D_MultArr = reshape(D_MultArr,[401,401,301]); % reshape it to be a 401x401x301 multi-dimensional array
 t2 = toc;
 fprintf('The elapsed time of loading the policy data file is %.3f seconds.\n',t2)
 
