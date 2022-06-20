@@ -157,7 +157,7 @@ while err>tol
             errlist(kk+1)=diff;
             err = diff;
 
-            %------------------"policy-update"----------------------------
+            %--------------------"policy-evaluation" step--------------------------
             u_vec = U(:); %convert the value function to be a long vector
             d_vec = Dmat(:); %convert the policy matrix to be a long vector
             b_vec = zeros(1,(N+1)*(N+1)); %initialize b vector
