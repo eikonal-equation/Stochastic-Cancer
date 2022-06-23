@@ -16,7 +16,7 @@
 /*==============================================================================
  * File: WriteToFile.h
  *
- * Author: MingYi Wang (based on the code by Marc Aur¨¨le Gilles)
+ * Author: MingYi Wang (based on the code by Marc AurÂ¨Â¨le Gilles)
  *
  * Description: This file contains helper functions for writing multi-dimensional
  * Boost arrays and vectors to file
@@ -39,7 +39,7 @@ namespace ublas = boost::numeric::ublas;
 namespace io {
 
     
-    //This function writes the 2D Boost matrix aMatrix to a file with name aFilename
+    //This function writes the 2D Boost::ublas matrix "aMatrix" to a file with name aFilename
     
     template <class T>
     void writeToFile2D(std::string aFilename,  ublas::matrix<T> aMatrix) {
@@ -85,7 +85,7 @@ namespace io {
     }
 
     
-    // This function writes the 3D Boost array aArray to a file with name aFilename
+    // This function writes the 1D vector "aVec" to a file with name aFilename
     
     template <class T>
     void writeVectorToFile(std::string aFilename, std::vector<T> aVec) {
