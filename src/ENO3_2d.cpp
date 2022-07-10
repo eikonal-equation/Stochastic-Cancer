@@ -20,8 +20,8 @@
  * Author: MingYi Wang
  *
  * Description: This file contains the implementation of functions that construct
- * the stencil for 3rd-order ENO interpolation in 2D and compute the actual 3rd-order
- * ENO interpolation in 2D
+ * the stencil for 4th-order ENO cubic interpolation in 2D and compute the actual 
+ * 4th-order ENO cubic interpolation in 2D
  *
  *============================================================================*/
 
@@ -31,12 +31,13 @@
 #include <boost/math/interpolators/makima.hpp>
 using boost::math::interpolators::makima;
 
-// This function constructs the 6x6 matrix needed for ENO interpolation in 2D
+// This function constructs the 6x6 matrix needed for ENO cubic interpolation in 2D
 // aValueFunctionMatrix(input): a (N+1)x(N+1) matrix of the value function in 2D on a uniform grid
 // kIndex_x(input): the first index such that xloc <= x, where x is the vector of sample points in the horizontal direciton
 // kIndex_y(input): the first index such that yloc <= x, where y is the vector of sample points in the vertical direction
 //
-// aValueMatrix(output): a 6x6 matrix of values corresponding to the 6x6 stencil to be used for ENO3 interpolation in 2D.
+// aValueMatrix(output): a 6x6 matrix of values corresponding to the 6x6 stencil to be used for ENO cubic interpolation in 2D.
+//
 ublas::matrix<double> ENO2D::Matrix_for_ENO3_Interp(const ublas::matrix<double>& aValueFunctionMatrix, const int kIndex_x, const int kIndex_y)
 {
 	// if kIndex_x = 1 or kIndex_x, we simply choose the first 4-point stencil in the horinzontal direction
@@ -83,7 +84,7 @@ ublas::matrix<double> ENO2D::Matrix_for_ENO3_Interp(const ublas::matrix<double>&
 
 
 
-// This function computes a more efficient verstion of ENO3 interpolation on a uniform grid for interior points in 2D
+// This function computes a more efficient version of ENO cubic interpolation on a uniform grid for interior points in 2D
 // aValueMatrix(input) : 6x6 matrix of values of sample points.
 // xloc(input) : x coordinate of the query point
 // yloc(input) : y coordinate of the query point
@@ -93,6 +94,7 @@ ublas::matrix<double> ENO2D::Matrix_for_ENO3_Interp(const ublas::matrix<double>&
 //			          sample points in vertical direction
 //
 // val(output): the interpolated value
+//
 double ENO2D::ENO3_interp_2d(const ublas::matrix<double>& aValueMatrix, const int kIndex_x, const int kIndex_y, const double xloc, const double yloc)
 {
 	const double NN = fN; // cast the length of position vector in x-direction into double for future computation

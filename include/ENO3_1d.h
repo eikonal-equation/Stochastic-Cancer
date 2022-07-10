@@ -20,8 +20,8 @@
  * Author: MingYi Wang
  *
  * Description: This file contains the declarations of functions that compute 
- * Newton 2nd and 3rd divided difference; 3rd-order interpolation in Newton form;
- * and 3rd-order ENO interpolation in 1D.
+ * Newton 2nd and 3rd divided difference; cubic interpolation in Newton form;
+ * and 4th-order ENO cubic interpolation in 1D.
 
  *
  * Details of all of these functions are found in ENO3_1d.cpp.
@@ -66,7 +66,7 @@ public:
 	// This function computes the third divided difference
 	double Third_Divided_Difference(const double D3, const double D23, const double D123, const array<double, 4>& aStencilArray, const array<double, 4>& aValueArray);
 
-	// This function is the 3rd-order interpolation in Newton form given a 4-point stencil
+	// This function is the cubic interpolation in Newton form given a 4-point stencil
 	double NewtonInterp(const array<double, 4>& aStencilArray, const array<double, 4>& aCoefficientArray, const double xloc);
 
 	// Construct an array with length 6 for ENO3 1D interpolation

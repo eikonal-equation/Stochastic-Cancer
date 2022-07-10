@@ -20,8 +20,8 @@
  * Author: MingYi Wang
  *
  * Description: This file contains the implementation of functions that compute 
- * Newton 2nd and 3rd divided difference; 3rd-order interpolation in Newton form;
- * and 3rd-order ENO interpolation in 1D.
+ * Newton 2nd and 3rd divided difference; cubic interpolation in Newton form;
+ * and 4th-order ENO cubic interpolation in 1D.
  *
  *============================================================================*/
 
@@ -75,7 +75,7 @@ double
 	return D1234;
 }
 
-// This function computes 3rd-order Newton interpolation
+// This function computes cubic interpolation in Newton form
 // aStencilArray(input) : 4x1 vector of sample points
 // aCoefficientArray(input) : 4x1 coefficient vector of x computed from Newton divided difference.
 // xloc(input) : coordinate of the query point
@@ -93,11 +93,12 @@ double ENO1D::NewtonInterp(const array<double, 4>& aStencilArray, const array<do
 }
 
 
-// This function constructs a value array with length 6 for ENO3 1D interpolation
+// This function constructs a value array with length 6 for ENO cubic interpolation in 1D
 // aValueFunctionArray(input): a (N+1)x1 vector of values corresponding to a uniform grid in 1D
 // kIndex(input): the first index such that xloc <= x, where x is the vector of sample points
 //
-// ValueArray(output): a 6x1 vector of values corresponding to the 6-point stencil to be used for ENO3 interpolation
+// ValueArray(output): a 6x1 vector of values corresponding to the 6-point stencil to be used for ENO interpolation
+//
 array<double,6> inline ENO1D::Array_for_ENO3_Interp(const ublas::vector<double>& aValueFunctionArray, const int kIndex)
 {
 	array<double, 6> ValueArray{ 0,0,0,0,0,0 };
@@ -126,13 +127,13 @@ array<double,6> inline ENO1D::Array_for_ENO3_Interp(const ublas::vector<double>&
 	return ValueArray;
 }
 
-// This function computes a more efficient verstion of ENO3 interpolation on a uniform grid
+// This function computes a more efficient version of ENO cubic interpolation on a uniform grid
 // aValueArray(input) : a 6x1 vector of values of the 6-point stencil to be used for ENO3 interpolation
 // xloc(input) : coordinate of the query point
 // kIndex(input) : the first index such that xloc <= x, where x is the vector of sample points
 //
 // val(output) : interpolated value
-
+//
 double  ENO1D::ENO3_interp_1d(const array<double, 6>& aValueArray, const int kIndex, const double xloc)
 {
 

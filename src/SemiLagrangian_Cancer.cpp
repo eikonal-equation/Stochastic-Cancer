@@ -497,7 +497,7 @@ ublas::matrix<double> CancerSL::MainSolver_by_SL()
 							{
 								first_col[i] = Vmat_old(i + ky_list[m] - 3, 0);
 							}
-                                                        // 3rd-order ENO interpolation in 1D
+                                                        // 4th-order ENO cubic interpolation in 1D
 							hat_v[m] = myENOgrid1D_y.ENO3_interp_1d(first_col, ky_list[m], hat_y[m]);
 						}
 					}
@@ -529,7 +529,7 @@ ublas::matrix<double> CancerSL::MainSolver_by_SL()
 							{
 								first_col[i] = Vmat_old(i + ky_list[m] - 3, 0);
 							}
-							// 3rd-order ENO interpolation in 1D
+							// 4th-order ENO cubic interpolation in 1D
 							hat_v[m] = myENOgrid1D_y.ENO3_interp_1d(first_col, ky_list[m], hat_y[m]);
 						}
 					}
@@ -576,7 +576,7 @@ ublas::matrix<double> CancerSL::MainSolver_by_SL()
 							{
 								last_col[i] = Vmat_old(i + ky_list[m] - 3, fN);
 							}
-							// 3rd-order ENO interpolation in 1D
+							// 4th-order ENO cubic interpolation in 1D
 							hat_v[m] = myENOgrid1D_y.ENO3_interp_1d(last_col, ky_list[m], hat_y[m]);
 						}
 					}
@@ -608,7 +608,7 @@ ublas::matrix<double> CancerSL::MainSolver_by_SL()
 							{
 								last_col[i] = Vmat_old(i + ky_list[m] - 3, fN);
 							}
-							// 3rd-order ENO interpolation in 1D
+							// 4th-order ENO cubic interpolation in 1D
 							hat_v[m] = myENOgrid1D_y.ENO3_interp_1d(last_col, ky_list[m], hat_y[m]);
 
 
@@ -662,7 +662,7 @@ ublas::matrix<double> CancerSL::MainSolver_by_SL()
 								{
 									first_col[i] = Vmat_old(i + ky_list[m] - 3, 0);
 								}
-								// 3rd-order ENO interpolation in 1D
+								// 4th-order ENO cubic interpolation in 1D
 								hat_v[m] = myENOgrid1D_y.ENO3_interp_1d(first_col, ky_list[m], hat_y[m]);
 							}
 							else if (hat_x[m] > 1)
@@ -675,13 +675,14 @@ ublas::matrix<double> CancerSL::MainSolver_by_SL()
 								{
 									last_col[i] = Vmat_old(i + ky_list[m] - 3, fN);
 								}
-								// 3rd-order ENO interpolation in 1D
+								// 4th-order ENO cubic interpolation in 1D
 								hat_v[m] = myENOgrid1D_y.ENO3_interp_1d(last_col, ky_list[m], hat_y[m]);
 							}
 							else
-							{
+							{       
+                                                                // construct the 6x6 matrix of the value function for ENO interpolation in 2D
 								ublas::matrix<double> Interp_Mat = myENOgrid2D.Matrix_for_ENO3_Interp(Vmat_old, kx_list[m], ky_list[m]);
-								// 3rd-order ENO interpolation in 2D
+								// 4th-order ENO cubic interpolation in 2D
 								hat_v[m] = myENOgrid2D.ENO3_interp_2d(Interp_Mat, kx_list[m], ky_list[m], hat_x[m], hat_y[m]);
 
 							}
@@ -721,7 +722,7 @@ ublas::matrix<double> CancerSL::MainSolver_by_SL()
 								{
 									first_col[i] = Vmat_old(i + ky_list[m] - 3, 0);
 								}
-								// 3rd-order ENO interpolation in 1D
+								// 4th-order ENO cubic interpolation in 1D
 								hat_v[m] = myENOgrid1D_y.ENO3_interp_1d(first_col, ky_list[m], hat_y[m]);
 							}
 							else if (hat_x[m] > 1)
@@ -734,13 +735,14 @@ ublas::matrix<double> CancerSL::MainSolver_by_SL()
 								{
 									last_col[i] = Vmat_old(i + ky_list[m] - 3, fN);
 								}
-								// 3rd-order ENO interpolation in 1D
+								// 4th-order ENO cubic interpolation in 1D
 								hat_v[m] = myENOgrid1D_y.ENO3_interp_1d(last_col, ky_list[m], hat_y[m]);
 							}
 							else
-							{
+							{       
+                                                                // construct the 6x6 matrix of value function for ENO interpolation in 2D
 								ublas::matrix<double> Interp_Mat = myENOgrid2D.Matrix_for_ENO3_Interp(Vmat_old, kx_list[m], ky_list[m]);
-								// 3rd-order ENO interpolation in 2D
+								// 4th-order ENO cubic interpolation in 2D
 								hat_v[m] = myENOgrid2D.ENO3_interp_2d(Interp_Mat, kx_list[m], ky_list[m], hat_x[m], hat_y[m]);
 
 							}

@@ -20,8 +20,8 @@
  * Author: MingYi Wang
  *
  * Description: This file contains the declarations of functions that construct
- * the stencil for 3rd-order ENO interpolation in 2D and compute the actual 3rd-order
- * ENO interpolation in 2D
+ * the stencil for 4th-order ENO cubic interpolation in 2D and compute the actual 
+ * 4th-order ENO cubic interpolation in 2D
  *
  * Details of all of these functions are found in ENO3_2d.cpp.
  *
@@ -55,7 +55,7 @@ public:
 	// This function constructs the 6x6 matrix needed for ENO interpolation in 2D
 	ublas::matrix<double> Matrix_for_ENO3_Interp(const ublas::matrix<double>& aValueFunctionMatrix, const int kIndex_x, const int kIndex_y);
 
-	// Main ENO3 interpolation function in 2D
+	// Main ENO cubic interpolation function in 2D
 	double ENO3_interp_2d(const ublas::matrix<double>& aValueMatrix, const int kIndex_x, const int kIndex_y, const double xloc, const double yloc);
 
 
