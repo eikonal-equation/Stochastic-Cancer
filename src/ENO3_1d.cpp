@@ -82,10 +82,9 @@ double
 // val(output) : interpolated value
 double ENO1D::NewtonInterp(const array<double, 4>& aStencilArray, const array<double, 4>& aCoefficientArray, const double xloc)
 {
-	const int n = aCoefficientArray.size() - 1;
-	const int degree = n;
+	const int n = aCoefficientArray.size() - 1; //degree of the interpolating polynomial
 	double val = aCoefficientArray[n];
-	for (int i = 0; i < degree; i++)
+	for (int i = 0; i < n; i++)
 	{
 		val = aCoefficientArray[n - i - 1] + (xloc - aStencilArray[n - i - 1]) * val;
 	}
