@@ -12,22 +12,22 @@
  * You should have received a copy of the GNU General Public License along with this program.
  * If not, see http://www.gnu.org/licenses/.
  *============================================================================*/
- 
- 
-/*==============================================================================
- * File: ENO3_1d.cpp
- *
- * Author: MingYi Wang
- *
- * Description: This file contains the implementation of functions that compute 
- * Newton 2nd and 3rd divided difference; cubic interpolation in Newton form;
- * and 4th-order ENO cubic interpolation in 1D.
- *
- *============================================================================*/
+
+
+ /*==============================================================================
+  * File: ENO3_1d.cpp
+  *
+  * Author: MingYi Wang
+  *
+  * Description: This file contains the implementation of functions that compute
+  * Newton 2nd and 3rd divided difference; cubic interpolation in Newton form;
+  * and 4th-order ENO cubic interpolation in 1D.
+  *
+  *============================================================================*/
 
 #include "ENO3_1d.h"
 
-//------------------------------Libraries--------------------------------------
+  //------------------------------Libraries--------------------------------------
 #include <boost/math/interpolators/makima.hpp>
 using boost::math::interpolators::makima;
 
@@ -43,7 +43,7 @@ using boost::math::interpolators::makima;
 // D123(output) : the first 2nd order divided difference
 
 tuple<double, double, double>
- ENO1D::Second_Divided_Difference(const double D2, const double D12,
+ENO1D::Second_Divided_Difference(const double D2, const double D12,
 	const array<double, 4>& aStencilArray, const array<double, 4>& aValueArray)
 {
 	// D123 : = f[x1, x2, x3]
@@ -63,7 +63,7 @@ tuple<double, double, double>
 //
 // D1234(output) : the first 3rd order divided difference
 double
- ENO1D::Third_Divided_Difference(const double D3, const double D23, const double D123,
+ENO1D::Third_Divided_Difference(const double D3, const double D23, const double D123,
 	const array<double, 4>& aStencilArray, const array<double, 4>& aValueArray)
 {
 	// D1234 : = f[x1, x2, x3, x4]
@@ -98,7 +98,7 @@ double ENO1D::NewtonInterp(const array<double, 4>& aStencilArray, const array<do
 //
 // ValueArray(output): a 6x1 vector of values corresponding to the 6-point stencil to be used for ENO interpolation
 //
-array<double,6> inline ENO1D::Array_for_ENO3_Interp(const ublas::vector<double>& aValueFunctionArray, const int kIndex)
+array<double, 6> inline ENO1D::Array_for_ENO3_Interp(const ublas::vector<double>& aValueFunctionArray, const int kIndex)
 {
 	array<double, 6> ValueArray{ 0,0,0,0,0,0 };
 
@@ -127,7 +127,7 @@ array<double,6> inline ENO1D::Array_for_ENO3_Interp(const ublas::vector<double>&
 }
 
 // This function computes a more efficient version of ENO cubic interpolation on a uniform grid
-// aValueArray(input) : a 6x1 vector of values of the 6-point stencil to be used for ENO3 interpolation
+// aValueArray(input) : a 6x1 vector of values of the 6-point stencil to be used for ENO cubic interpolation
 // xloc(input) : coordinate of the query point
 // kIndex(input) : the first index such that xloc <= x, where x is the vector of sample points
 //

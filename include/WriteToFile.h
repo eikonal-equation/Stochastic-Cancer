@@ -13,21 +13,21 @@
  * If not, see http://www.gnu.org/licenses/.
  *============================================================================*/
 
-/*==============================================================================
- * File: WriteToFile.h
- *
- * Author: MingYi Wang (based on the code by Marc Aur¨¨le Gilles)
- *
- * Description: This file contains helper functions for writing multi-dimensional
- * Boost arrays and vectors to file
- *
- *============================================================================*/
+ /*==============================================================================
+  * File: WriteToFile.h
+  *
+  * Author: MingYi Wang (based on the code by Marc Aur¨¨le Gilles)
+  *
+  * Description: This file contains helper functions for writing multi-dimensional
+  * Boost arrays and vectors to file
+  *
+  *============================================================================*/
 
 
 #ifndef WRITE_TO_FILE_H
 #define WRITE_TO_FILE_H
 
-/** ----- Libraries ----------------------------------------------------------*/
+  /** ----- Libraries ----------------------------------------------------------*/
 #include <fstream>
 #include <iostream>
 #include <string>
@@ -38,75 +38,75 @@ namespace ublas = boost::numeric::ublas;
 
 namespace io {
 
-    
-    //This function writes the 2D Boost::ublas matrix "aMatrix" to a file with name aFilename
-    
-    template <class T>
-    void writeToFile2D(std::string aFilename,  ublas::matrix<T> aMatrix) {
-        const int aDim0 = aMatrix.size1();
-        const int aDim1 = aMatrix.size2();
-        //double element;
-        ofstream dataFile;
-        dataFile.open(aFilename.c_str(), std::ios::app);
-        if (!dataFile) {
-            // if can't open the file
-            std::cout << "An error occured trying to open the file" << std::endl;
-            return;
-        }
-        else {
-            // Success!
-            dataFile.close();
-        }
-        
-        dataFile.open(aFilename.c_str(), std::ios::binary);
-        for (int i = 0; i < aDim0; ++i) {
-            for (int j = 0; j < aDim1; ++j)
-            {
-                dataFile.write(reinterpret_cast<char*> (&aMatrix(i,j)), sizeof(T));
-            }
-        }
-        dataFile.close();
-    }
 
-    template <class T>
-    void AppendToFile2D(std::string aFilename, ublas::matrix<T> aMatrix) {
-        const int aDim0 = aMatrix.size1();
-        const int aDim1 = aMatrix.size2();
-        //double element;
-        ofstream dataFile;
-        dataFile.open(aFilename.c_str(), std::ios::binary | std::ios::app);
-        for (int i = 0; i < aDim0; ++i) {
-            for (int j = 0; j < aDim1; ++j)
-            {
-                dataFile.write(reinterpret_cast<char*> (&aMatrix(i, j)), sizeof(T));
-            }
-        }
-        dataFile.close();
-    }
+	//This function writes the 2D Boost::ublas matrix "aMatrix" to a file with name aFilename
 
-    
-    // This function writes the 1D vector "aVec" to a file with name aFilename
-    
-    template <class T>
-    void writeVectorToFile(std::string aFilename, std::vector<T> aVec) {
-        ofstream dataFile;
-        dataFile.open(aFilename.c_str(), std::ios::app);
-        if (!dataFile) {
-            // if can't open the file
-            std::cout << "An error occured trying to open the file" << std::endl;
-            return;
-        }
-        else {
-            // Success!
-            dataFile.close();
-        }
-        dataFile.open(aFilename.c_str(), std::ios::binary);
-        for (int i = 0; i < aVec.size(); ++i) {
-            dataFile.write(reinterpret_cast<char*> (&aVec[i]), sizeof(T));
-        }
-        dataFile.close();
-    }
+	template <class T>
+	void writeToFile2D(std::string aFilename, ublas::matrix<T> aMatrix) {
+		const int aDim0 = aMatrix.size1();
+		const int aDim1 = aMatrix.size2();
+		//double element;
+		ofstream dataFile;
+		dataFile.open(aFilename.c_str(), std::ios::app);
+		if (!dataFile) {
+			// if can't open the file
+			std::cout << "An error occured trying to open the file" << std::endl;
+			return;
+		}
+		else {
+			// Success!
+			dataFile.close();
+		}
+
+		dataFile.open(aFilename.c_str(), std::ios::binary);
+		for (int i = 0; i < aDim0; ++i) {
+			for (int j = 0; j < aDim1; ++j)
+			{
+				dataFile.write(reinterpret_cast<char*> (&aMatrix(i, j)), sizeof(T));
+			}
+		}
+		dataFile.close();
+	}
+
+	template <class T>
+	void AppendToFile2D(std::string aFilename, ublas::matrix<T> aMatrix) {
+		const int aDim0 = aMatrix.size1();
+		const int aDim1 = aMatrix.size2();
+		//double element;
+		ofstream dataFile;
+		dataFile.open(aFilename.c_str(), std::ios::binary | std::ios::app);
+		for (int i = 0; i < aDim0; ++i) {
+			for (int j = 0; j < aDim1; ++j)
+			{
+				dataFile.write(reinterpret_cast<char*> (&aMatrix(i, j)), sizeof(T));
+			}
+		}
+		dataFile.close();
+	}
+
+
+	// This function writes the 1D vector "aVec" to a file with name aFilename
+
+	template <class T>
+	void writeVectorToFile(std::string aFilename, std::vector<T> aVec) {
+		ofstream dataFile;
+		dataFile.open(aFilename.c_str(), std::ios::app);
+		if (!dataFile) {
+			// if can't open the file
+			std::cout << "An error occured trying to open the file" << std::endl;
+			return;
+		}
+		else {
+			// Success!
+			dataFile.close();
+		}
+		dataFile.open(aFilename.c_str(), std::ios::binary);
+		for (int i = 0; i < aVec.size(); ++i) {
+			dataFile.write(reinterpret_cast<char*> (&aVec[i]), sizeof(T));
+		}
+		dataFile.close();
+	}
 
 } /* namespace io */
 
-#endif // !WRITE_TO_FILE_H 
+#endif // !WRITE_TO_FILE_H

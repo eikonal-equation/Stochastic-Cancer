@@ -12,22 +12,22 @@
  * You should have received a copy of the GNU General Public License along with this program.
  * If not, see http://www.gnu.org/licenses/.
  *============================================================================*/
- 
- 
-/*==============================================================================
- * File: ENO3_2d.cpp
- *
- * Author: MingYi Wang
- *
- * Description: This file contains the implementation of functions that construct
- * the stencil for 4th-order ENO cubic interpolation in 2D and compute the actual 
- * 4th-order ENO cubic interpolation in 2D
- *
- *============================================================================*/
+
+
+ /*==============================================================================
+  * File: ENO3_2d.cpp
+  *
+  * Author: MingYi Wang
+  *
+  * Description: This file contains the implementation of functions that construct
+  * the stencil for 4th-order ENO cubic interpolation in 2D and compute the actual
+  * 4th-order ENO cubic interpolation in 2D
+  *
+  *============================================================================*/
 
 #include "ENO3_2d.h"
 
-//-----------------------------Libraries--------------------------------------
+  //-----------------------------Libraries--------------------------------------
 #include <boost/math/interpolators/makima.hpp>
 using boost::math::interpolators::makima;
 

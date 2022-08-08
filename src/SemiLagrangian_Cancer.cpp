@@ -12,22 +12,22 @@
  * You should have received a copy of the GNU General Public License along with this program.
  * If not, see http://www.gnu.org/licenses/.
  *============================================================================*/
- 
- 
-/*==============================================================================
- * File: SemiLagrangian_Cancer.cpp
- *
- * Author: MingYi Wang
- *
- * Description: This file contains the implementation of functions that compute the 
- * drift (deterministic) portion of the cancer dynamics; the coefficients and 
- * feet of the 1st-order weak approximation of the cancer dynamics; and the main 
- * solver for the value function using semi-Lagrangian scheme.
- *
- *============================================================================*/
+
+
+ /*==============================================================================
+  * File: SemiLagrangian_Cancer.cpp
+  *
+  * Author: MingYi Wang
+  *
+  * Description: This file contains the implementation of functions that compute the
+  * drift (deterministic) portion of the cancer dynamics; the coefficients and
+  * feet of the 1st-order weak approximation of the cancer dynamics; and the main
+  * solver for the value function using semi-Lagrangian scheme.
+  *
+  *============================================================================*/
 #include "SemiLagrangian_Cancer.h"
 
-//----------------------Project specific header files---------------------------
+  //----------------------Project specific header files---------------------------
 #include "WriteToFile.h"
 
 //------------------------------Libraries------------------------------------
@@ -42,8 +42,8 @@ CancerSL::CancerSL(int a_Factor, double a_Budget, double a_Treatment_const, doub
 	fBudget = a_Budget;
 	fN = 100 * fMulti_factor;
 
-        fM = int(125.0 / 2 * fMulti_factor * fBudget); //for octed ds
-    
+	fM = int(125.0 / 2 * fMulti_factor * fBudget); //for octed ds
+
 
 	fDs = fBudget / fM;
 	fDx = 1 / double(fN);
@@ -61,8 +61,8 @@ CancerSL::CancerSL(int a_Factor, double a_Budget, double a_Treatment_const, doub
 	//we have only considered cases that all three diffusion constants being the same
 	fDiff_const_1 = a_Diff_const;
 	fDiff_const_2 = fDiff_const_1;
-	fDiff_const_3 = fDiff_const_1; 
-	
+	fDiff_const_3 = fDiff_const_1;
+
 	fSigma = a_Treatment_const;
 	fDmax = 3; //(dmax = 3)
 
@@ -126,7 +126,7 @@ tuple<ublas::matrix<vector<double>>, ublas::matrix<vector<double>>, ublas::matri
 	ublas::matrix<std::vector<int>> index_x_mtd(fN + 1, fN + 1); // store all possible coefficients at x-direction for mtd
 	ublas::matrix<std::vector<int>> index_y_nodrug(fN + 1, fN + 1); // store all possible coefficients at y-direction for no therapy
 	ublas::matrix<std::vector<int>> index_y_mtd(fN + 1, fN + 1); // store all possible coefficients at y-direction for mtd
-	
+
 	// square root of time steps
 	double root_tau_0 = sqrt(tau_0);
 	double root_tau_mtd = sqrt(tau_mtd);
@@ -343,11 +343,11 @@ tuple<ublas::matrix<vector<double>>, ublas::matrix<vector<double>>, ublas::matri
 //--------------------------------Main Solver-----------------------------------
 ublas::matrix<double> CancerSL::MainSolver_by_SL()
 {
-    //-------------------------------------Initialization---------------------------------
-    
-    double tol = pow(10,-14); //set up a tolerance to choose one of the two values that are close to each other
+	//-------------------------------------Initialization---------------------------------
 
-    // initialize the matrix of the value function at s=0
+	double tol = pow(10, -14); //set up a tolerance to choose one of the two values that are close to each other
+
+	// initialize the matrix of the value function at s=0
 	ublas::matrix<double> Vmat_old(fN + 1, fN + 1);
 	for (int i = 0; i < fN + 1; i++)
 	{
@@ -364,9 +364,9 @@ ublas::matrix<double> CancerSL::MainSolver_by_SL()
 
 		}
 	}
-    
-    // initialize the matrix of the policy at s=0
-    ublas::matrix<bool> policy_mat(fN + 1, fN + 1);
+
+	// initialize the matrix of the policy at s=0
+	ublas::matrix<bool> policy_mat(fN + 1, fN + 1);
 	for (int i = 0; i < fN + 1; i++)
 	{
 		for (int j = 0; j < fN + 1; j++)
@@ -379,18 +379,18 @@ ublas::matrix<double> CancerSL::MainSolver_by_SL()
 	// construct a uniform grid on [0,1]
 	ENO1D myENOgrid1D_y(fDy, fy0, fN);
 
-   // save the initial value function and policy matrices
-   
-    //string filename1 = "strict ENO3_v2_2D N=1600 s=6 s1=0.15.dat";
-    //io::writeToFile2D<double>(filename1,Vmat_old);
-    //string filename2 = "strict dval 2D N=1600 s=6 s1=0.15 tol=1e-14.dat";
-    //io::writeToFile2D<bool>(filename2,policy_mat); 
-	
-    string filename1 = "test_valuefn.dat";
-    io::writeToFile2D<double>(filename1,Vmat_old);
-    string filename2 = "test_policy.dat";
-    io::writeToFile2D<bool>(filename2,policy_mat); 
-    
+	// save the initial value function and policy matrices
+
+	 //string filename1 = "strict ENO3_v2_2D N=1600 s=6 s1=0.15.dat";
+	 //io::writeToFile2D<double>(filename1,Vmat_old);
+	 //string filename2 = "strict dval 2D N=1600 s=6 s1=0.15 tol=1e-14.dat";
+	 //io::writeToFile2D<bool>(filename2,policy_mat);
+
+	string filename1 = "test_valuefn.dat";
+	io::writeToFile2D<double>(filename1, Vmat_old);
+	string filename2 = "test_policy.dat";
+	io::writeToFile2D<bool>(filename2, policy_mat);
+
 
 	// precompute all the coefficients
 	// initialization of storage
@@ -404,7 +404,7 @@ ublas::matrix<double> CancerSL::MainSolver_by_SL()
 	ublas::matrix<std::vector<int>> index_y_mtd(fN + 1, fN + 1); // store all possible coefficients at y-direction for mtd
 
 
-    // construct sample arrays in the horizontal (q) and vertical (p) direction respectively
+	// construct sample arrays in the horizontal (q) and vertical (p) direction respectively
 	ublas::vector<double> q(fN + 1);
 	ublas::vector<double> p(fN + 1);
 	for (int i = 0; i < fN + 1; i++)
@@ -413,23 +413,23 @@ ublas::matrix<double> CancerSL::MainSolver_by_SL()
 		p(i) = fy0 + i * fDy;
 	}
 
-    // start time of computing all coefficients
+	// start time of computing all coefficients
 	auto start = std::chrono::steady_clock::now();
 
 	//pre-compute the coefficients
 	std::tie(sample_x_nodrug, sample_x_mtd, sample_y_nodrug, sample_y_mtd, index_x_nodrug, index_x_mtd, index_y_nodrug, index_y_mtd)
 		= precompute_coeff_2D(q, p);
-    
-    // end time of computating all coefficients
+
+	// end time of computating all coefficients
 	auto end = std::chrono::steady_clock::now();
-	
+
 	// print out the computational time used for coefficients
 	std::chrono::duration<double> elapsed_seconds = end - start;
 	std::cout << "elapsed time: " << elapsed_seconds.count() << "s\n";
-   //-------------------------------------End of Initialization---------------------------------
+	//-------------------------------------End of Initialization---------------------------------
 
 
-	//-------------------------------------Main Loop--------------------------------------------
+	 //-------------------------------------Main Loop--------------------------------------------
 	for (int l = 1; l < fM + 1; l++) //outermost loop for s-slices
 	{
 		auto start = std::chrono::steady_clock::now();
@@ -461,13 +461,13 @@ ublas::matrix<double> CancerSL::MainSolver_by_SL()
 			}
 		}
 
-        
-      
-        //-------------------Inner loops over the 2D spatial grid-------------------------------------
-        //int max_num_threads = omp_get_max_threads();
-        //cout << max_num_threads << endl;
 
-        #pragma omp parallel for 
+
+		//-------------------Inner loops over the 2D spatial grid-------------------------------------
+		//int max_num_threads = omp_get_max_threads();
+		//cout << max_num_threads << endl;
+
+#pragma omp parallel for
 		for (int i = index_rec; i < index_death + 1; i++)
 		{
 
@@ -497,13 +497,13 @@ ublas::matrix<double> CancerSL::MainSolver_by_SL()
 							{
 								first_col[i] = Vmat_old(i + ky_list[m] - 3, 0);
 							}
-                                                        // 4th-order ENO cubic interpolation in 1D
+							// 4th-order ENO cubic interpolation in 1D
 							hat_v[m] = myENOgrid1D_y.ENO3_interp_1d(first_col, ky_list[m], hat_y[m]);
 						}
 					}
 
 					double v1 = std::accumulate(hat_v.begin(), hat_v.end(), 0.0);
-					
+
 					v1 = v1 / 4; //take the average
 					v1 = min(v1, 1.0); //ensuring the largest possible value is v=1
 
@@ -535,16 +535,16 @@ ublas::matrix<double> CancerSL::MainSolver_by_SL()
 					}
 
 					double v2 = std::accumulate(hat_v.begin(), hat_v.end(), 0.0);
-					
+
 					v2 = v2 / 4; //take the average
 					v2 = min(v2, 1.0); //ensuring the largest possible value is v=1
 
 					Vmat_current(i, j) = max(v1, v2); //take the larger value
 
-					if ((v1 >= v2) || ((std::abs(v1-v2)/min(v1,v2)) < tol))
+					if ((v1 >= v2) || ((std::abs(v1 - v2) / min(v1, v2)) < tol))
 					{
-                                            // if the difference is small, we don't use drugs
-					    policy_mat(i, j) = 0;
+						// if the difference is small, we don't use drugs
+						policy_mat(i, j) = 0;
 					}
 					else
 					{
@@ -581,7 +581,7 @@ ublas::matrix<double> CancerSL::MainSolver_by_SL()
 						}
 					}
 					double v1 = std::accumulate(hat_v.begin(), hat_v.end(), 0.0);
-				
+
 					v1 = v1 / 4; //take the average
 					v1 = min(v1, 1.0); //ensuring the largest possible value is v=1
 
@@ -615,15 +615,15 @@ ublas::matrix<double> CancerSL::MainSolver_by_SL()
 						}
 					}
 					double v2 = std::accumulate(hat_v.begin(), hat_v.end(), 0.0);
-					
+
 					v2 = v2 / 4; // take the average
 					v2 = min(v2, 1.0); //ensuring the largest possible value is v=1
 
 					Vmat_current(i, j) = max(v1, v2); //take the larger value
-					
-                                        if ((v1 >= v2) || ((std::abs(v1-v2)/min(v1,v2)) < tol))
+
+					if ((v1 >= v2) || ((std::abs(v1 - v2) / min(v1, v2)) < tol))
 					{
-                                        	// if the difference is small, we don't use drugs
+						// if the difference is small, we don't use drugs
 						policy_mat(i, j) = 0;
 					}
 					else
@@ -655,7 +655,7 @@ ublas::matrix<double> CancerSL::MainSolver_by_SL()
 							if (hat_x[m] < 0)
 							{
 								// if it diffuses outside q=0, we just project it onto q=0 (never observed actually)
-                                                                hat_x[m] = 0;
+								hat_x[m] = 0;
 
 								array<double, 6> first_col;
 								for (int i = 0; i < 6; i++)
@@ -668,7 +668,7 @@ ublas::matrix<double> CancerSL::MainSolver_by_SL()
 							else if (hat_x[m] > 1)
 							{
 								// if it diffuses outside q=1, we just project it onto q=1 (never observed actually)
-                                                                hat_x[m] = 1;
+								hat_x[m] = 1;
 
 								array<double, 6> last_col;
 								for (int i = 0; i < 6; i++)
@@ -679,8 +679,8 @@ ublas::matrix<double> CancerSL::MainSolver_by_SL()
 								hat_v[m] = myENOgrid1D_y.ENO3_interp_1d(last_col, ky_list[m], hat_y[m]);
 							}
 							else
-							{       
-                                                                // construct the 6x6 matrix of the value function for ENO interpolation in 2D
+							{
+								// construct the 6x6 matrix of the value function for ENO interpolation in 2D
 								ublas::matrix<double> Interp_Mat = myENOgrid2D.Matrix_for_ENO3_Interp(Vmat_old, kx_list[m], ky_list[m]);
 								// 4th-order ENO cubic interpolation in 2D
 								hat_v[m] = myENOgrid2D.ENO3_interp_2d(Interp_Mat, kx_list[m], ky_list[m], hat_x[m], hat_y[m]);
@@ -689,7 +689,7 @@ ublas::matrix<double> CancerSL::MainSolver_by_SL()
 						}
 					}
 					double v1 = std::accumulate(hat_v.begin(), hat_v.end(), 0.0);
-					
+
 					v1 = v1 / 8; //take the average
 					v1 = min(v1, 1.0); //ensuring the largest possible value is v=1
 
@@ -715,7 +715,7 @@ ublas::matrix<double> CancerSL::MainSolver_by_SL()
 							if (hat_x[m] < 0)
 							{
 								// if it diffuses outside q=0, we just project it onto q=0 (never observed actually)
-                                                                hat_x[m] = 0;
+								hat_x[m] = 0;
 
 								array<double, 6> first_col;
 								for (int i = 0; i < 6; i++)
@@ -728,7 +728,7 @@ ublas::matrix<double> CancerSL::MainSolver_by_SL()
 							else if (hat_x[m] > 1)
 							{
 								// if it diffuses outside q=1, we just project it onto q=1 (never observed actually)
-                                                                hat_x[m] = 1;
+								hat_x[m] = 1;
 
 								array<double, 6> last_col;
 								for (int i = 0; i < 6; i++)
@@ -739,8 +739,8 @@ ublas::matrix<double> CancerSL::MainSolver_by_SL()
 								hat_v[m] = myENOgrid1D_y.ENO3_interp_1d(last_col, ky_list[m], hat_y[m]);
 							}
 							else
-							{       
-                                                                // construct the 6x6 matrix of value function for ENO interpolation in 2D
+							{
+								// construct the 6x6 matrix of value function for ENO interpolation in 2D
 								ublas::matrix<double> Interp_Mat = myENOgrid2D.Matrix_for_ENO3_Interp(Vmat_old, kx_list[m], ky_list[m]);
 								// 4th-order ENO cubic interpolation in 2D
 								hat_v[m] = myENOgrid2D.ENO3_interp_2d(Interp_Mat, kx_list[m], ky_list[m], hat_x[m], hat_y[m]);
@@ -757,16 +757,16 @@ ublas::matrix<double> CancerSL::MainSolver_by_SL()
 
 					Vmat_current(i, j) = max(v1, v2); //take the larger value
 
-                                        if ((v1 >= v2) || ((std::abs(v1-v2)/min(v1,v2)) < tol))
+					if ((v1 >= v2) || ((std::abs(v1 - v2) / min(v1, v2)) < tol))
 					{
-                                        	// if the difference is small, we don't use drugs
+						// if the difference is small, we don't use drugs
 						policy_mat(i, j) = 0;
 					}
 					else
 					{
 						policy_mat(i, j) = 1;
 					}
-                    
+
 				}
 
 			}
@@ -774,18 +774,18 @@ ublas::matrix<double> CancerSL::MainSolver_by_SL()
 
 		Vmat_old = Vmat_current; //swap old slice and current slice at the end
 
-       // save the data for every 5 slices
-        if (l % 5 == 0)
-        {
-            io::AppendToFile2D<double>(filename1, Vmat_old);
-            io::AppendToFile2D<bool>(filename2, policy_mat);
-        } 
+	   // save the data for every 5 slices
+		if (l % 5 == 0)
+		{
+			io::AppendToFile2D<double>(filename1, Vmat_old);
+			io::AppendToFile2D<bool>(filename2, policy_mat);
+		}
 
-        cout << "The current slice is l = " << l << endl;
+		cout << "The current slice is l = " << l << endl;
 		auto end = std::chrono::steady_clock::now();
 		std::chrono::duration<double> elapsed_seconds = end - start;
 		std::cout << "elapsed time: " << elapsed_seconds.count() << "s\n";
- 	}
-   
+	}
+
 	return Vmat_old;
 }

@@ -12,27 +12,27 @@
  * You should have received a copy of the GNU General Public License along with this program.
  * If not, see http://www.gnu.org/licenses/.
  *============================================================================*/
- 
- 
-/*==============================================================================
- * File: ENO3_1d.h
- *
- * Author: MingYi Wang
- *
- * Description: This file contains the declarations of functions that compute 
- * Newton 2nd and 3rd divided difference; cubic interpolation in Newton form;
- * and 4th-order ENO cubic interpolation in 1D.
 
- *
- * Details of all of these functions are found in ENO3_1d.cpp.
- *
- *============================================================================*/
+
+ /*==============================================================================
+  * File: ENO3_1d.h
+  *
+  * Author: MingYi Wang
+  *
+  * Description: This file contains the declarations of functions that compute
+  * Newton 2nd and 3rd divided difference; cubic interpolation in Newton form;
+  * and 4th-order ENO cubic interpolation in 1D.
+
+  *
+  * Details of all of these functions are found in ENO3_1d.cpp.
+  *
+  *============================================================================*/
 
 #pragma once
 #ifndef ENO3_1D_H
 #define ENO3_1D_H
 
-//---------------------------Libraries-----------------------------------------
+  //---------------------------Libraries-----------------------------------------
 #include <iostream>
 #include <cmath>
 #include <vector>
@@ -61,7 +61,7 @@ public:
 	}
 
 	// This function computes the second divided difference
-	tuple<double, double, double> Second_Divided_Difference(const double D2, const double D12, const array<double,4>& aStencilArray, const array<double, 4>& aValueArray);
+	tuple<double, double, double> Second_Divided_Difference(const double D2, const double D12, const array<double, 4>& aStencilArray, const array<double, 4>& aValueArray);
 
 	// This function computes the third divided difference
 	double Third_Divided_Difference(const double D3, const double D23, const double D123, const array<double, 4>& aStencilArray, const array<double, 4>& aValueArray);
@@ -69,10 +69,10 @@ public:
 	// This function is the cubic interpolation in Newton form given a 4-point stencil
 	double NewtonInterp(const array<double, 4>& aStencilArray, const array<double, 4>& aCoefficientArray, const double xloc);
 
-	// Construct an array with length 6 for ENO3 1D interpolation
+	// Construct an array with length 6 for 4th-order ENO cubic 1D interpolation
 	array<double, 6> Array_for_ENO3_Interp(const ublas::vector<double>& aValueFunctionArray, const int kIndex);
 
-	// Main ENO3 interploation function in 1D
+	// Main 4th-order ENO cubic interploation function in 1D
 	double ENO3_interp_1d(const array<double, 6>& aValueArray, const int kIndex, const double xloc);
 
 

@@ -12,26 +12,26 @@
  * You should have received a copy of the GNU General Public License along with this program.
  * If not, see http://www.gnu.org/licenses/.
  *============================================================================*/
- 
- 
-/*==============================================================================
- * File: ENO3_2d.h
- *
- * Author: MingYi Wang
- *
- * Description: This file contains the declarations of functions that construct
- * the stencil for 4th-order ENO cubic interpolation in 2D and compute the actual 
- * 4th-order ENO cubic interpolation in 2D
- *
- * Details of all of these functions are found in ENO3_2d.cpp.
- *
- *============================================================================*/
+
+
+ /*==============================================================================
+  * File: ENO3_2d.h
+  *
+  * Author: MingYi Wang
+  *
+  * Description: This file contains the declarations of functions that construct
+  * the stencil for 4th-order ENO cubic interpolation in 2D and compute the actual
+  * 4th-order ENO cubic interpolation in 2D
+  *
+  * Details of all of these functions are found in ENO3_2d.cpp.
+  *
+  *============================================================================*/
 
 #pragma once
 #ifndef ENO3_2D_H
 #define ENO3_2D_H
 
-//----------------------Project specific header files---------------------------
+  //----------------------Project specific header files---------------------------
 #include "ENO3_1d.h"
 
 //----------------------Libraries----------------------------------------------

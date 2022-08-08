@@ -12,19 +12,19 @@
  * You should have received a copy of the GNU General Public License along with this program.
  * If not, see http://www.gnu.org/licenses/.
  *============================================================================*/
- 
- 
-/*==============================================================================
- * File: main.cpp
- *
- * Author: MingYi Wang
- *
- * Description: This file initializes all the global variables and executes the 
- * the corresponding example from the command line.
- *
- *============================================================================*/
- 
-//-----------------------Project specific header files---------------------------
+
+
+ /*==============================================================================
+  * File: main.cpp
+  *
+  * Author: MingYi Wang
+  *
+  * Description: This file initializes all the global variables and executes the
+  * the corresponding example from the command line.
+  *
+  *============================================================================*/
+
+  //-----------------------Project specific header files---------------------------
 #include "ENO3_1d.h"
 #include "ENO3_2d.h"
 #include "SemiLagrangian_Cancer.h"
@@ -45,7 +45,7 @@ int main()
 
 	CancerSL Example(gFactor, gBudget, gTreatment_const, gDiff_const);
 	ublas::matrix<double> v = Example.MainSolver_by_SL();
-	
+
 	return 0;
 }
 
