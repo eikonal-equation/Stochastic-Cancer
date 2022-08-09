@@ -225,7 +225,7 @@ double ENO2D::ENO3_interp_2d(const ublas::matrix<double>& aValueMatrix, const in
 			D3 = D3r; D23 = D23r; D123 = D123r;
 			//note that in this case, "yl" computed on line 199 will be added as the last entry in the 4-pt left stencil in the next stage
 		}
-		}
+		
 		// repeat the process to the third-order in the horizontal direction
 		if (flag == 'l')
 		{

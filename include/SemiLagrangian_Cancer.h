@@ -87,7 +87,7 @@ private:
 	double fDiff_const_2;
 	double fDiff_const_3;
 
-	double fSigma; //treatment constant
+	double fDelta; //treatment constant
 	double fDmax; // MTD (here dmax = 3)
 	int index_rec; // index of the recovery barrier on y(p)-axis
 	int index_death; // index of death barrier on y(p)-axis

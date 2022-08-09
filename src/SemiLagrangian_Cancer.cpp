@@ -63,15 +63,15 @@ CancerSL::CancerSL(int a_Factor, double a_Budget, double a_Treatment_const, doub
 	fDiff_const_2 = fDiff_const_1;
 	fDiff_const_3 = fDiff_const_1;
 
-	fSigma = a_Treatment_const;
+	fDelta = a_Treatment_const;
 	fDmax = 3; //(dmax = 3)
 
 	index_rec = int(0.01 / fDx); // index of the recovery barrier
 
 	index_death = fN - index_rec; // index of the death barrier
 
-	tau_mtd = fDs / (fDmax + fSigma); // time-step for MTD-based therapy
-	tau_0 = fDs / fSigma; // time-step for no therapy
+	tau_mtd = fDs / (fDmax + fDelta); // time-step for MTD-based therapy
+	tau_0 = fDs / fDelta; // time-step for no therapy
 
 }
 // Define find_index function
@@ -381,15 +381,15 @@ ublas::matrix<double> CancerSL::MainSolver_by_SL()
 
 	// save the initial value function and policy matrices
 
-	 //string filename1 = "strict ENO3_v2_2D N=1600 s=6 s1=0.15.dat";
-	 //io::writeToFile2D<double>(filename1,Vmat_old);
-	 //string filename2 = "strict dval 2D N=1600 s=6 s1=0.15 tol=1e-14.dat";
-	 //io::writeToFile2D<bool>(filename2,policy_mat);
+	 /*string filename1 = "strict corrected ENO3_v2_2D N=1600 s=6 s1=0.15.dat";
+	 io::writeToFile2D<double>(filename1,Vmat_old);
+	 string filename2 = "strict corrected dval 2D N=1600 s=6 s1=0.15 tol=1e-14.dat";
+	 io::writeToFile2D<bool>(filename2,policy_mat);*/
 
-	string filename1 = "test_valuefn.dat";
-	io::writeToFile2D<double>(filename1, Vmat_old);
-	string filename2 = "test_policy.dat";
-	io::writeToFile2D<bool>(filename2, policy_mat);
+	 string filename1 = "test_valuefn.dat";
+	 io::writeToFile2D<double>(filename1, Vmat_old);
+	 string filename2 = "test_policy.dat";
+	 io::writeToFile2D<bool>(filename2, policy_mat);
 
 
 	// precompute all the coefficients
@@ -467,7 +467,7 @@ ublas::matrix<double> CancerSL::MainSolver_by_SL()
 		//int max_num_threads = omp_get_max_threads();
 		//cout << max_num_threads << endl;
 
-#pragma omp parallel for
+		#pragma omp parallel for
 		for (int i = index_rec; i < index_death + 1; i++)
 		{
 
