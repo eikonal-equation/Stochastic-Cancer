@@ -217,11 +217,14 @@ double ENO2D::ENO3_interp_2d(const ublas::matrix<double>& aValueMatrix, const in
 			right_stencil = left_stencil; yright = yleft;
 			D3 = D3l; D23 = D23l; D123 = D123l;
 			flag = 'l'; // change the flag to be 'l', which stands for the left stencil, if we switch to the left
+			//note that in this case, "yr" computed on line 201 will be added as the last entry in the 4-pt right stencil in the next stage
 		}
 		else // otherwise, choose the right stencil
 		{
 			left_stencil = right_stencil; yleft = yright;
 			D3 = D3r; D23 = D23r; D123 = D123r;
+			//note that in this case, "yl" computed on line 199 will be added as the last entry in the 4-pt left stencil in the next stage
+		}
 		}
 		// repeat the process to the third-order in the horizontal direction
 		if (flag == 'l')
@@ -237,9 +240,7 @@ double ENO2D::ENO3_interp_2d(const ublas::matrix<double>& aValueMatrix, const in
 
 			// compute the value for the point added from the left at x(kIndex_x-3) by ENO 1D interpolation
 			yl = grid_y.ENO3_interp_1d(left_col, kIndex_y, yloc);
-			// Note in this case, the value for the pointed added from the right is the last entry in the previous yr
-			yr = yright[2];
-
+			//Here, the value function to be added to "yright" is still the "yr" computed in the previous stage (line 201)
 			yleft[3] = yl;
 			yright[3] = yr;
 
@@ -271,9 +272,7 @@ double ENO2D::ENO3_interp_2d(const ublas::matrix<double>& aValueMatrix, const in
 
 			// compute the value for the point added from the right at x(kIndex_x + 2) by ENO 1D interpolation
 			yr = grid_y.ENO3_interp_1d(right_col, kIndex_y, yloc);
-			// Note in this case, the value for the pointed added from the left is the last entry in the previous yl
-			yl = yleft[2];
-
+			//Here, the value function to be added to "yleft" is still the "yl" computed in the previous stage (line 199)
 			yleft[3] = yl;
 			yright[3] = yr;
 
