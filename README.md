@@ -41,7 +41,7 @@ The following instructions explain how to run the Solver for threshold-aware opt
 
 To change compilers, edit `CC=` by putting your desired compiler after the `=` sign. The default compiler is set to `g++`. 
 
-To update the path/version of the "Boost" library you've installed, edit `BOOSTPATH` by putting your own path/version after the `=` sign. The current path/version is `./boost_1_75_0`.
+To update the path/version of the "Boost" library you've installed, edit `BOOSTPATH` by putting your own path/version after the `=` sign. The current path/version is `./boost_1_79_0`.
 
 To compile the code, type `make main` in the terminal at this folder. 
 
