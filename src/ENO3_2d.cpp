@@ -218,7 +218,6 @@ double ENO2D::ENO3_interp_2d(const ublas::matrix<double>& aValueMatrix, const in
 			yright = yleft;
 			D3 = D3l; D23 = D23l; D123 = D123l;
 			flag = 'l'; // change the flag to be 'l', which stands for the left stencil, if we switch to the left
-
 			//note that in this case, "yr" computed on line 201 will be added as the last entry in the 4-pt right stencil in the next stage
 		}
 		else // otherwise, choose the right stencil

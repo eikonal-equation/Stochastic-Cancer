@@ -380,12 +380,6 @@ ublas::matrix<double> CancerSL::MainSolver_by_SL()
 	ENO1D myENOgrid1D_y(fDy, fy0, fN);
 
 	// save the initial value function and policy matrices
-
-	 /*string filename1 = "strict corrected ENO3_v2_2D N=1600 s=6 s1=0.15.dat";
-	 io::writeToFile2D<double>(filename1,Vmat_old);
-	 string filename2 = "strict corrected dval 2D N=1600 s=6 s1=0.15 tol=1e-14.dat";
-	 io::writeToFile2D<bool>(filename2,policy_mat);*/
-
 	 string filename1 = "test_valuefn.dat";
 	 io::writeToFile2D<double>(filename1, Vmat_old);
 	 string filename2 = "test_policy.dat";

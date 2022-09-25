@@ -192,11 +192,11 @@ while err>tol
             ky_mat(test_0) = KP1(test_0);
 
             %Taking care of Boundary conditions
-            test_u0 = (U==0);
+            test_u0 = (U == 0);
             node_index = (reshape(column(test_u0), 1,[])-1)*(N+1) + reshape(row(test_u0), 1,[]);
             b_vec(node_index) = u_vec(node_index);
 
-            test_largenum = (U>=largeNum);
+            test_largenum = (U >= largeNum);
             node_index = (reshape(column(test_largenum), 1,[])-1)*(N+1) + reshape(row(test_largenum), 1,[]);
             b_vec(node_index) = u_vec(node_index);
 

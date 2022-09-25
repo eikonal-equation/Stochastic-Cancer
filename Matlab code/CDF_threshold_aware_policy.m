@@ -33,8 +33,8 @@ s=0.05;%treatment cost
 dmax=3;%MTD
 
 xx = linspace(0,1,N+1);
-ind_rec=length(0:dx:0.01);%index for recovery barrier
-ind_death=find(xx==0.99,1);%index for death barrier
+ind_rec = length(0:dx:0.01);%index for recovery barrier
+ind_death = (N+1) - ind_rec + 1;%index for death barrier
 
 %drift functions (deterministic portion) of the cancer dynamics
 fp = @(q,p,d) p*(1-p)*(ba/(n+1)-q*(bv-c)-d)-p*(s1^2*p-(s1^2*p^2+s2^2*(1-p)^2*(1-q)^2 ...
@@ -52,7 +52,7 @@ if N >= 800
     %uniform discretization of thresholds on [0,Initial_budget]
     budget_list = 0:0.005:Initial_budget;
 
-else % for demo purpose, if N < 800, we have policy data for every 0.02 budget
+else % for demo purpose only, if N < 800, we have policy data for every 0.02 budget
 
     dt0 = 0.02/(s)/40; %travel 1/40-th of a slice when not using drugs
     dtmax = 0.02/(dmax+s)/10; %travel 1/10-th of a slice when at MTD rate
@@ -70,22 +70,27 @@ for i = 1:M
     d_interior{i} = D_thres(:,:,i)';
 end
 
-count_death=0; %counting number of deaths
+count_death = 0; %counting number of deaths
 
 %% Monte Carlo Main Loop
 Xcost = zeros(1,sample_size); %initialize the cost-recording array for each sample
-parfor ii = 1:sample_size
-    cost=0; %accumulative cost
-    dmax_set=[];
-    d0_set=[1];
-    policy_list = [];
+for ii = 1:sample_size
+    cost_set = [0]; %accumulative cost
     xlist=[xloc];
     ylist=[yloc];
     w1=[0];w2=[0];w3=[0];
 
     policy = 0; %initial policy, assuming we know it before testing
-    policy_list=[policy_list,policy];
-    dt=dt0; %the corresponding first time step
+    policy_list=[policy];
+    if (policy == 0)
+        dmax_set = [];
+        d0_set = [1];
+        dt = dt0;
+    else
+        dmax_set = [1];
+        d0_set = [];
+        dt = dtmax;
+    end
 
     %potential storage array of policies if running out of budget
     after_0 =[];
@@ -107,10 +112,10 @@ parfor ii = 1:sample_size
     xlist(j) = xval+fq(xval,yval)*dt...
         + xval*(1-xval)*(s3*(w3(j)-w3(j-1))-s2*(w2(j)-w2(j-1)));
 
-    cost = cost +(policy+s)*dt; %accumulating cost
-    next_budget=Initial_budget-cost; %computing the remaining budget
+    cost_set(j) = cost_set(j-1) + (policy+s)*dt; %accumulating cost
+    next_budget = Initial_budget - cost_set(j); %find the remaining budget
 
-    while ylist(j) > 0.01
+    while ylist(j) >= 0.01
         %find the indices of the current position on the grid
         kq=find(xlist(j)<=xx',1);
         kp=find(ylist(j)<=xx',1);
@@ -126,12 +131,10 @@ parfor ii = 1:sample_size
                         %super-conservative determination strategy
                         if ((d3 + d4) == 2)
                             policy = dmax;
-
                             after_max=[after_max,j];
                             dt = dtmax;
                         else
                             policy = 0;
-
                             after_0=[after_0,j];
                             dt = dt0;
                         end
@@ -140,12 +143,10 @@ parfor ii = 1:sample_size
                         %super-aggressive determination strategy
                         if ((d3 + d4) > 0)
                             policy = dmax;
-
                             after_max=[after_max,j];
                             dt = dtmax;
                         else
                             policy = 0;
-
                             after_0=[after_0,j];
                             dt = dt0;
                         end
@@ -154,12 +155,10 @@ parfor ii = 1:sample_size
                         %vote by majority determination strategy
                         if ((d3 + d4) > 0)
                             policy = dmax;
-
                             after_max=[after_max,j];
                             dt = dtmax;
                         else
                             policy = 0;
-
                             after_0=[after_0,j];
                             dt = dt0;
                         end
@@ -176,12 +175,10 @@ parfor ii = 1:sample_size
                         %super-conservative determination strategy
                         if sum(d_square)== 4
                             policy = dmax;
-
                             after_max=[after_max,j];
                             dt = dtmax;
                         else
                             policy = 0;
-
                             after_0=[after_0,j];
                             dt = dt0;
                         end
@@ -190,12 +187,10 @@ parfor ii = 1:sample_size
                         %super-aggressive determination strategy
                         if sum(d_square) > 0
                             policy = dmax;
-
                             after_max=[after_max,j];
                             dt=dtmax;
                         else
                             policy = 0;
-
                             after_0=[after_0,j];
                             dt=dt0;
                         end
@@ -204,12 +199,10 @@ parfor ii = 1:sample_size
                         %vote by majority determination strategy
                         if sum(d_square)>=3
                             policy = dmax;
-
                             after_max=[after_max,j];
                             dt=dtmax;
                         else
                             policy = 0;
-
                             after_0=[after_0,j];
                             dt=dt0;
                         end
@@ -237,12 +230,10 @@ parfor ii = 1:sample_size
                         %super-conservative determination strategy
                         if sum(d_square)== 4
                             policy = dmax;
-
                             dmax_set=[dmax_set,j];
                             dt = dtmax;
                         else
                             policy = 0;
-
                             d0_set=[d0_set,j];
                             dt = dt0;
                         end
@@ -251,12 +242,10 @@ parfor ii = 1:sample_size
                         %super-aggressive determination strategy
                         if sum(d_square) > 0
                             policy = dmax;
-
                             dmax_set=[dmax_set,j];
                             dt=dtmax;
                         else
                             policy = 0;
-
                             d0_set=[d0_set,j];
                             dt=dt0;
                         end
@@ -265,12 +254,10 @@ parfor ii = 1:sample_size
                         %vote by majority determination strategy
                         if sum(d_square)>=3
                             policy = dmax;
-
                             dmax_set=[dmax_set,j];
                             dt=dtmax;
                         else
                             policy = 0;
-
                             d0_set=[d0_set,j];
                             dt=dt0;
                         end
@@ -291,12 +278,10 @@ parfor ii = 1:sample_size
                         %super-conservative
                         if sum(d_cube)== 8
                             policy = dmax;
-
                             dmax_set=[dmax_set,j];
                             dt = dtmax;
                         else
                             policy = 0;
-
                             d0_set=[d0_set,j];
                             dt = dt0;
                         end
@@ -305,12 +290,10 @@ parfor ii = 1:sample_size
                         %super-aggressive
                         if sum(d_cube) > 0
                             policy = dmax;
-
                             dmax_set=[dmax_set,j];
                             dt=dtmax;
                         else
                             policy = 0;
-
                             d0_set=[d0_set,j];
                             dt=dt0;
                         end
@@ -319,48 +302,43 @@ parfor ii = 1:sample_size
                         %majority
                         if sum(d_cube) >= 6
                             policy = dmax;
-
                             dmax_set=[dmax_set,j];
                             dt=dtmax;
                         else
                             policy = 0;
-
                             d0_set=[d0_set,j];
                             dt=dt0;
                         end
                         policy_list=[policy_list,policy];
                 end
-
             end
-
         end
         %------Run EM by applying the policy we just determined above------
-        j=j+1;
+        j = j+1; %update the time step
         w1(j)=w1(j-1)+sqrt(dt)*normrnd(0,1);
         w2(j)=w2(j-1)+sqrt(dt)*normrnd(0,1);
         w3(j)=w3(j-1)+sqrt(dt)*normrnd(0,1);
-        yval=ylist(j-1);xval=xlist(j-1);
+        yval = ylist(j-1);
+        xval = xlist(j-1);
+        
         ylist(j) = yval+fp(xval,yval,policy)*dt+ yval*(1-yval)*s1*(w1(j)-w1(j-1))+...
             yval*(1-yval)*(1-xval)*s2*(w2(j)-w2(j-1))+...
             yval*(1-yval)*xval*s3*(w3(j)-w3(j-1));
         xlist(j) = xval+fq(xval,yval)*dt+xval*(1-xval)*(s3*(w3(j)-w3(j-1))-s2*(w2(j)-w2(j-1)));
 
-        cost = cost+(policy+s)*dt; %accumulating cost
-
-        next_budget = Initial_budget - cost; %computing the remaining budget
-
-
+        cost_set(j) = cost_set(j-1) + (policy+s)*dt; %accumulating cost
+        next_budget = Initial_budget - cost_set(j); %find the remaining budget
+        
         %if we cross the failure barrier, stop
         if ylist(j) > 0.99
             count_death = count_death+1;
-
             %set the cost to be a large value (the theoretical value should be infinite)
-            cost = 10^6;
+            cost_set(j) = 10^6;
             break
         end
 
     end
-    Xcost(ii)=cost;
+    Xcost(ii)= cost_set(end);
     %store the first 100 samples for visualization purpose
     if ii < 101
         path_x{ii} = xlist;
@@ -370,7 +348,6 @@ parfor ii = 1:sample_size
         after_0_cell{ii} = after_0;
         after_max_cell{ii} = after_max;
         policy_cell{ii} = policy_list;
-
     end
 end
 
