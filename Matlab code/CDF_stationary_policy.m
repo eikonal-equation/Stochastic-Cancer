@@ -1,8 +1,11 @@
 function Xcost = CDF_stationary_policy(Dmat_det,xloc,yloc,choice,sample_size)
 %This function computes the CDF y = Pr(J <= s) that measures the
 %probability of success where the cumulative cost J is within any positive
-%threshold value s using the stationary policy computed from Gluzman et al.
+%threshold value "s" using the stationary policy computed from Gluzman et al.
 %https://royalsocietypublishing.org/doi/10.1098/rspb.2019.2454
+%
+%Author: MingYi Wang, Cornell University
+%Last Modified: 10/24/2022
 %
 %Dmat_det (input): the policy matrix of stationary policy computed from
 %                  Gluzman et al.

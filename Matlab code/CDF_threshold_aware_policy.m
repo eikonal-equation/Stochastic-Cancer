@@ -1,7 +1,9 @@
 function Xcost = CDF_threshold_aware_policy(Dmat_det,D_thres,Initial_budget,xloc,yloc,choice,sample_size)
 %This function computes the CDF y = Pr(J <= s) that measures the
 %probability of keeping the accumulative cost J under a given initial
-%threshold/budget value s using thresold-aware policies (paper name)
+%threshold/budget value "s" using thresold-aware policies developed in
+%the paper "Stochastic optimal control to guide adaptive cancer therapy"
+%(https://www.biorxiv.org/content/10.1101/2022.06.17.496649v2)
 %
 %Dmat_det (input): the policy matrix of stationary policy computed from
 %                  Gluzman et al.

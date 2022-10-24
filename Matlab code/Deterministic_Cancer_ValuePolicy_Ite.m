@@ -6,8 +6,9 @@
 % We hence recover the optimal bang-bang policy in feedback form via a
 % semi-Lagrangian discretization.
 % This function appliesGauss-Seidel iterations with "Fast sweeping" ordering
-% and applies a "value-policy" iteration scheme described in our paper
-% (paper name & link)
+% and applies a "value-policy" iteration scheme described in the Supplementary Materials
+% of the paper "Stochastic optimal control to guide adaptive cancer therapy"
+% (https://www.biorxiv.org/content/10.1101/2022.06.17.496649v2.supplementary-material)
 %
 % N (input): number of points (minus 1) along each side of the unit qp-square
 %
@@ -15,7 +16,7 @@
 % Dmat (output): a (N+1)x(N+1) matrix of the optimal policy in feedback form
 %
 % Author: MingYi Wang, Cornell University
-% Last Modified: 06/18/2022
+% Last Modified: 10/24/2022
 %
 function  [U,Dmat] = Deterministic_Cancer_ValuePolicy_Ite(N)
 %% parameters
