@@ -38,19 +38,19 @@ using namespace std;
 
 int main()
 {
-	const int gFactor = 32;
-	const double gTreatment_const = 0.05;
-	const double gDiff_const = 0.15;
-	const double gThres_recovery = 0.01;
-	const double gThres_failure = 1.0 - gThres_recovery;
-	const string gCase = "Example2"; // or "Example2"
+	const int gFactor = 16; // Global factor to determine the spatial grid resolution. E.g., gFactor = 4 means a 401 x 401 grid
+	const double gTreatment_const = 0.05; // Treatment constant "delta"
+	const double gDiff_const = 0.15; // Diffusion constant (here we assumed all volatilities are the same. But feel free to change the setting)
+	const double gThres_recovery = 0.01; // Stabilization/remission barrier
+	const double gThres_failure = 1.0 - gThres_recovery; // Failure barrier
+	const string gCase = "Example2"; // or "Example2" // Choose which Example to run. Current setting: (1) EGT-based model and (2) SR model
 
 	if (gCase == "Example1") {
-		const double gSlice_factor = 125.0 / 2;
-		const int gNum_diffpts_interior = 8;
-		const int gNum_diffpts_boundary = 4;
-		const double gMaxDose = 3;
-		const double gBudget = 6;
+		const double gSlice_factor = 125.0 / 2; // Global factor to determine how many s-slices to implement
+		const int gNum_diffpts_interior = 8; // Number of diffusive sample points for each gridpoint in the interior
+		const int gNum_diffpts_boundary = 4; // Number of diffusive sample points for each gridpoint on the boundary
+		const double gMaxDose = 3; // MTD rate
+		const double gBudget = 6; // Total budget
 		//=============================================Start of Our PDE Solver=====================================================
 		auto start = chrono::high_resolution_clock::now();
 		cout << "Running our PDE Solver for Example 1" << endl;
@@ -65,15 +65,15 @@ int main()
 		//=============================================END of Our PDE Solver=====================================================
 	}
 	else if (gCase == "Example2") {
-		const double gSlice_factor = 250;
-		const int gNum_diffpts_interior = 2;
-		const int gNum_diffpts_boundary = 2;
-		const double gTime_rescale = 15;
-		const double gMaxDose = 3;
-		const double gAlpha = 0.06*gTime_rescale;
-		const double gBeta = 6.25*gTime_rescale; // (of order 1e-7)
-		const double gCarrying_capacity = 0.48; //(of order 1e7)
-		const double gBudget = 6;
+		const double gSlice_factor = 250; // Global factor to determine how many s-slices to implement
+		const int gNum_diffpts_interior = 2; // Number of diffusive sample points for each gridpoint in the interior
+		const int gNum_diffpts_boundary = 2; // Number of diffusive sample points for each gridpoint on the boundary
+		const double gTime_rescale = 15; // Rescaling factor for time
+		const double gMaxDose = 3; // MTD rate
+		const double gAlpha = 0.06*gTime_rescale; // Rescaled durg efficiency
+		const double gBeta = 6.25*gTime_rescale; // Rescaled action of senstivie on resistant (of order 1e-7)
+		const double gCarrying_capacity = 0.48; // Petri dish Carrying Capacity (of order 1e7)
+		const double gBudget = 6; // Total budget
 		//=============================================Start of Our PDE Solver=====================================================
 		auto start = chrono::high_resolution_clock::now();
 		cout << "Running our PDE Solver for Example 2" << endl;

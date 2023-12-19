@@ -24,7 +24,7 @@
   * feet of the 1st-order weak approximation of the cancer dynamics; and the main
   * solver for the value function using semi-Lagrangian scheme.
   *
-  * Details of all of these functions are found in SemiLagrangian_Cancer.h.cpp.
+  * Details of all of these functions are found in Solver_SL.cpp.
   *
   *============================================================================*/
 #pragma once
@@ -69,13 +69,14 @@ public:
 	double diffusion_p_1d(const double q, const double p); // Diffusion function for p with a 1D BM
 
 	// This function pre-compute all the coefficients and feet of the 1st-order weak approximation of the dynamics
-	tuple<ublas::matrix<vector<double>>, ublas::matrix<vector<double>>, ublas::matrix<vector<double>>, ublas::matrix<vector<double>>,
-		ublas::matrix<vector<int>>, ublas::matrix<vector<int>>, ublas::matrix<vector<int>>, ublas::matrix<vector<int>>>
-		precompute_coeff_2D(const ublas::vector<double>& qArray, const ublas::vector<double>& pArray);
+	void precompute_coeff_2D(const ublas::vector<double>& qArray, const ublas::vector<double>& pArray, ublas::matrix<vector<double>>& sample_x_nodrug,
+		ublas::matrix<vector<double>>& sample_x_mtd, ublas::matrix<vector<double>>& sample_y_nodrug, ublas::matrix<vector<double>>& sample_y_mtd,
+		ublas::matrix<vector<int>>& index_x_nodrug, ublas::matrix<vector<int>>& index_x_mtd,
+		ublas::matrix<vector<int>>& index_y_nodrug, ublas::matrix<vector<int>>& index_y_mtd);
 
 
 	// This is the main solver that uses time marching and semi-Lagrangian schemes.
-	// I.e., given a budget s, this function will compute the value function
+	// I.e., given a budget Sbar, this function will compute the value function
 	// and return policies in feedbackform for each slice of cost up to the budget.
 	ublas::matrix<double> MainSolver_by_SL();
 
@@ -85,7 +86,7 @@ private:
 	double fSlice_factor;
 	double fBudget; // The cost we are integrating up to.
 	int fN; // number of points on each side of spatial grid
-	int fM; // number of slices
+	int fM; // number of s slices
 	double fx0; // starting point at x-axis
 	double fy0; // starting point at y-axis
 	double fDx; // Delta x(or q)
@@ -97,7 +98,7 @@ private:
 	double bv;
 	double c;
 	double n;
-	//parameters from Melbinger et al. https://journals.aps.org/prl/pdf/10.1103/PhysRevLett.105.178101
+	//parameters from Carrère 2017 https://doi.org/10.1016/j.jtbi.2016.11.009
 	double gs;
 	double gr;
 	double m_size;
@@ -122,8 +123,8 @@ private:
 	int fNum_diffpts_interior; // number of sample points for the diffusion process in the interior of the domain
 	int fNum_diffpts_boundary; // number of sample points for the diffusion process on the boundary of the domain
 	string fCase; //Indication of which example to run
-	double fTol;
-	int fStorage_factor;
+	double fTol; // Tolerance to determine when to use drugs
+	int fStorage_factor; //Sumsampling factor for practical storage
 };
 #endif // ! SOLVER_SL_H
 

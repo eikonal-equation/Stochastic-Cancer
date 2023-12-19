@@ -1,5 +1,5 @@
 /*=============================================================================
- * Copyright (C) 2022 MingYi Wang
+ * Copyright (C) 2023 MingYi Wang
  *
  * This program is free software: you can redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -16,7 +16,7 @@
  /*==============================================================================
   * File: WriteToFile.h
   *
-  * Author: MingYi Wang (based on the code by Marc Aur¨¨le Gilles)
+  * Author: MingYi Wang (based on the code by Marc Gilles)
   *
   * Description: This file contains helper functions for writing multi-dimensional
   * Boost arrays and vectors to file
@@ -40,7 +40,6 @@ namespace io {
 
 
 	//This function writes the 2D Boost::ublas matrix "aMatrix" to a file with name aFilename
-
 	template <class T>
 	void writeToFile2D(std::string aFilename, ublas::matrix<T> aMatrix) {
 		const int aDim0 = aMatrix.size1();
@@ -67,7 +66,7 @@ namespace io {
 		}
 		dataFile.close();
 	}
-
+	//This function appends the 2D Boost::ublas matrix "aMatrix" to a file with name aFilename
 	template <class T>
 	void AppendToFile2D(std::string aFilename, ublas::matrix<T> aMatrix) {
 		const int aDim0 = aMatrix.size1();
@@ -86,7 +85,6 @@ namespace io {
 
 
 	// This function writes the 1D vector "aVec" to a file with name aFilename
-
 	template <class T>
 	void writeVectorToFile(std::string aFilename, std::vector<T> aVec) {
 		ofstream dataFile;
@@ -109,10 +107,9 @@ namespace io {
 
 
 
-	//This function writes the 2D Boost::ublas matrix "aMatrix" to a file with name aFilename
-
+	//This function downsamples and writes the 2D Boost::ublas matrix "aMatrix" to a file with name aFilename
 	template <class T>
-	void writeToFile2D_downsample(std::string aFilename, ublas::matrix<T> aMatrix) {
+	void writeToFile2D_downsample(std::string aFilename, ublas::matrix<T> aMatrix, int aDownSampleFactor) {
 		const int aDim0 = aMatrix.size1();
 		const int aDim1 = aMatrix.size2();
 		//double element;
@@ -129,24 +126,24 @@ namespace io {
 		}
 
 		dataFile.open(aFilename.c_str(), std::ios::binary);
-		for (int i = 0; i < aDim0; i += 2) {
-			for (int j = 0; j < aDim1; j += 2)
+		for (int i = 0; i < aDim0; i += aDownSampleFactor) {
+			for (int j = 0; j < aDim1; j += aDownSampleFactor)
 			{
 				dataFile.write(reinterpret_cast<char*> (&aMatrix(i, j)), sizeof(T));
 			}
 		}
 		dataFile.close();
 	}
-
+	//This function downsamples and appends the 2D Boost::ublas matrix "aMatrix" to a file with name aFilename
 	template <class T>
-	void AppendToFile2D_downsample(std::string aFilename, ublas::matrix<T> aMatrix) {
+	void AppendToFile2D_downsample(std::string aFilename, ublas::matrix<T> aMatrix, int aDownSampleFactor) {
 		const int aDim0 = aMatrix.size1();
 		const int aDim1 = aMatrix.size2();
 		//double element;
 		ofstream dataFile;
 		dataFile.open(aFilename.c_str(), std::ios::binary | std::ios::app);
-		for (int i = 0; i < aDim0; i += 2) {
-			for (int j = 0; j < aDim1; j += 2)
+		for (int i = 0; i < aDim0; i += aDownSampleFactor) {
+			for (int j = 0; j < aDim1; j += aDownSampleFactor)
 			{
 				dataFile.write(reinterpret_cast<char*> (&aMatrix(i, j)), sizeof(T));
 			}
@@ -156,8 +153,7 @@ namespace io {
 
 
 
-	//This function writes the 2D Boost::ublas matrix "aMatrix" to a file with name aFilename
-
+	//This function recasts and writes the 2D Boost::ublas matrix "aMatrix" to a file with name aFilename
 	template <class T>
 	void writeToFile2D_recast(std::string aFilename, ublas::matrix<T> aMatrix) {
 		const int aDim0 = aMatrix.size1();
@@ -186,7 +182,7 @@ namespace io {
 		}
 		dataFile.close();
 	}
-
+	//This function recasts and appends the 2D Boost::ublas matrix "aMatrix" to a file with name aFilename
 	template <class T>
 	void AppendToFile2D_recast(std::string aFilename, ublas::matrix<T> aMatrix) {
 		const int aDim0 = aMatrix.size1();

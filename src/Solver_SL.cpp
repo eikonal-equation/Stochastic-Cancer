@@ -35,7 +35,7 @@
 #include<omp.h>
 #include<iomanip>
 
-// Define the constructor
+// Define the constructor for Example 1
 CancerSL::CancerSL(int a_Factor, double a_Slice_factor, double a_Budget, double a_Treatment_const, double a_Diff_const, int a_Num_diffpts_interior, int a_Num_diffpts_boundary,
 	double a_Thres_recovery, double a_Thres_death, double a_MaxDose, string a_Case)
 {
@@ -68,24 +68,24 @@ CancerSL::CancerSL(int a_Factor, double a_Slice_factor, double a_Budget, double 
 	fDiff_const_3 = fDiff_const_1;
 
 	fDelta = a_Treatment_const;
-	fThres_rec = a_Thres_recovery; // threshold of recovery
+	fThres_rec = a_Thres_recovery; // threshold of stabilization
 	fThres_death = a_Thres_death; // threshold of failure
-	index_rec = int(fThres_rec / fDx); // index of the recovery barrier
+	index_rec = int(fThres_rec / fDx); // index of the stabilization barrier
 	index_death = fN - index_rec; // index of the death barrier
 
 	tau_mtd = fDs / (fDmax + fDelta); // time-step for MTD-based therapy
 	tau_0 = fDs / fDelta; // time-step for no therapy
 
-	fNum_diffpts_interior = a_Num_diffpts_interior;
-	fNum_diffpts_boundary = a_Num_diffpts_boundary;
+	fNum_diffpts_interior = a_Num_diffpts_interior; // number of diffusion samples in the interior
+	fNum_diffpts_boundary = a_Num_diffpts_boundary; // number of diffusion samples on the boundary
 	fCase = a_Case;
     fTol = 1e-14;
-    fStorage_factor = 5;
-	index_start_q = 0;
+    fStorage_factor = 5; // store every 5 slices
+	index_start_q = 0; // start with q = 0
 }
 
 
-// Define the overloaded constructor
+// Define the overloaded constructor for Example 2
 CancerSL::CancerSL(int a_Factor, double a_Slice_factor, double a_Budget, double a_Treatment_const, double a_Diff_const, int a_Num_diffpts_interior, int a_Num_diffpts_boundary,
 	double a_Thres_recovery, double a_Thres_death, double a_MaxDose, double a_Alpha, double a_Beta, double a_Carrying_capacity, double a_Time_rescale, string a_Case)
 {
@@ -95,7 +95,7 @@ CancerSL::CancerSL(int a_Factor, double a_Slice_factor, double a_Budget, double 
 	fBudget = a_Budget;
 	fN = 100 * fMulti_factor;
 
-	fM = int(fSlice_factor * fMulti_factor * fBudget); //for octed ds
+	fM = int(fSlice_factor * fMulti_factor * fBudget);
 
 
 	fDs = fBudget / fM;
@@ -104,7 +104,7 @@ CancerSL::CancerSL(int a_Factor, double a_Slice_factor, double a_Budget, double 
 	fx0 = 0;
 	fy0 = 0;
 
-	//parameters from Carr�re 2017 https://doi.org/10.1016/j.jtbi.2016.11.009
+	//parameters from Carrère 2017 https://doi.org/10.1016/j.jtbi.2016.11.009
 	gs = 0.031*a_Time_rescale;
 	gr = 0.026*a_Time_rescale;
 	m_size = 30;
@@ -121,20 +121,20 @@ CancerSL::CancerSL(int a_Factor, double a_Slice_factor, double a_Budget, double 
 	fDiff_const_3 = fDiff_const_1;
 
 	fDelta = a_Treatment_const;
-	fThres_rec = a_Thres_recovery; // threshold of recovery
+	fThres_rec = a_Thres_recovery; // threshold of remission
 	fThres_death = a_Thres_death; // threshold of failure
-	index_rec = int(fThres_rec / fDx); // index of the recovery barrier
+	index_rec = int(fThres_rec / fDx); // index of the remission barrier
 	index_death = fN - index_rec; // index of the death barrier
 
 	tau_mtd = fDs / (fDmax + fDelta); // time-step for MTD-based therapy
 	tau_0 = fDs / fDelta; // time-step for no therapy
 
-	fNum_diffpts_interior = a_Num_diffpts_interior;
-	fNum_diffpts_boundary = a_Num_diffpts_boundary;
+	fNum_diffpts_interior = a_Num_diffpts_interior; // number of diffusion samples in the interior
+	fNum_diffpts_boundary = a_Num_diffpts_boundary; // number of diffusion samples on the boundary
 	fCase = a_Case;
     fTol = 1e-14;
-    fStorage_factor = 10;
-	index_start_q = 0;
+    fStorage_factor = 10; // store every 10 slices
+	index_start_q = 0; // start with q = 0
 }
 
 // Define find_index function
@@ -184,9 +184,6 @@ inline double CancerSL::drift_q(const double q, const double p, const double aDo
 			q * (1 - q) * ((1 - q) * pow(fDiff_const_2, 2) - q * pow(fDiff_const_3, 2));
 	}
 	else if (aCase == "Example2") {
-		//returnVal = (1 - p) * q * (1 - q) * (gs - gr) - alpha * q * (1 - q) * aDose + beta_hat * p * pow(q, 2) * (1 - q)
-		//	+ pow(1 - p, 2) * q * (1 - q) * (pow(fDiff_const_2, 2) * (1 - q) - pow(fDiff_const_1, 2) * q);
-
 		//The case of 1d BM
 		returnVal = (1 - p) * q * (1 - q) * (gs - gr) - alpha * q * (1 - q) * aDose + beta_hat * p * pow(q, 2) * (1 - q)
 			+ pow(1 - p, 2) * q * (1 - q) * (pow(fDiff_const_2, 2) * (1 - q) - pow(fDiff_const_1, 2) * q + fDiff_const_1 * fDiff_const_2);
@@ -253,19 +250,19 @@ inline double CancerSL::diffusion_q_1d(const double q, const double p)
 
 
 // This function pre-compute all the coefficients and feet of the 1st-order weak approximation of the dynamics
-tuple<ublas::matrix<vector<double>>, ublas::matrix<vector<double>>, ublas::matrix<vector<double>>, ublas::matrix<vector<double>>,
-	ublas::matrix<vector<int>>, ublas::matrix<vector<int>>, ublas::matrix<vector<int>>, ublas::matrix<vector<int>>>
-	CancerSL::precompute_coeff_2D(const ublas::vector<double>& q, const ublas::vector<double>& p)
+void CancerSL::precompute_coeff_2D(const ublas::vector<double>& q, const ublas::vector<double>& p, ublas::matrix<vector<double>>& sample_x_nodrug,
+	ublas::matrix<vector<double>>& sample_x_mtd, ublas::matrix<vector<double>>& sample_y_nodrug, ublas::matrix<vector<double>>& sample_y_mtd,
+	ublas::matrix<vector<int>>& index_x_nodrug, ublas::matrix<vector<int>>& index_x_mtd,
+	ublas::matrix<vector<int>>& index_y_nodrug, ublas::matrix<vector<int>>& index_y_mtd)
 {
-	// initialization of storage
-	ublas::matrix<std::vector<double>> sample_x_nodrug(fN + 1, fN + 1); // store all possible locations in x-direction for no therapy
-	ublas::matrix<std::vector<double>> sample_x_mtd(fN + 1, fN + 1); // store all possible locations in x-direction for mtd
-	ublas::matrix<std::vector<double>> sample_y_nodrug(fN + 1, fN + 1); // store all possible locations in y-direction for no therapy
-	ublas::matrix<std::vector<double>> sample_y_mtd(fN + 1, fN + 1); // tore all possible locations in y-direction for mtd
-	ublas::matrix<std::vector<int>> index_x_nodrug(fN + 1, fN + 1); // store all possible coefficients at x-direction for no therapy
-	ublas::matrix<std::vector<int>> index_x_mtd(fN + 1, fN + 1); // store all possible coefficients at x-direction for mtd
-	ublas::matrix<std::vector<int>> index_y_nodrug(fN + 1, fN + 1); // store all possible coefficients at y-direction for no therapy
-	ublas::matrix<std::vector<int>> index_y_mtd(fN + 1, fN + 1); // store all possible coefficients at y-direction for mtd
+	//ublas::matrix<std::vector<double>> sample_x_nodrug(fN + 1, fN + 1); // store all possible locations in x-direction for no therapy
+	//ublas::matrix<std::vector<double>> sample_x_mtd(fN + 1, fN + 1); // store all possible locations in x-direction for mtd
+	//ublas::matrix<std::vector<double>> sample_y_nodrug(fN + 1, fN + 1); // store all possible locations in y-direction for no therapy
+	//ublas::matrix<std::vector<double>> sample_y_mtd(fN + 1, fN + 1); // tore all possible locations in y-direction for mtd
+	//ublas::matrix<std::vector<int>> index_x_nodrug(fN + 1, fN + 1); // store all possible coefficients at x-direction for no therapy
+	//ublas::matrix<std::vector<int>> index_x_mtd(fN + 1, fN + 1); // store all possible coefficients at x-direction for mtd
+	//ublas::matrix<std::vector<int>> index_y_nodrug(fN + 1, fN + 1); // store all possible coefficients at y-direction for no therapy
+	//ublas::matrix<std::vector<int>> index_y_mtd(fN + 1, fN + 1); // store all possible coefficients at y-direction for mtd
 
 	// square root of time steps
 	double root_tau_0 = sqrt(tau_0);
@@ -358,7 +355,6 @@ tuple<ublas::matrix<vector<double>>, ublas::matrix<vector<double>>, ublas::matri
 						hat_y[k] = y_no_drug + (1 - 2 * (k % 2)) * root_tau_0 * diff_y_3d[0] * fDiff_const_1 + (1 - 2 * (k / 2 % 2)) * root_tau_0 * diff_y_3d[2] * fDiff_const_3;
 					}
 					else if (fCase == "Example2") {
-						//hat_y[k] = y_no_drug + (1 - 2 * (k % 2)) * root_tau_0 * diff_y_2d[0] * fDiff_const_1;
 						hat_y[k] = y_no_drug + (1 - 2 * (k % 2)) * root_tau_0 * diff_y_1d;
 					}
 				}
@@ -381,7 +377,6 @@ tuple<ublas::matrix<vector<double>>, ublas::matrix<vector<double>>, ublas::matri
 						hat_y[k] = y_mtd + (1 - 2 * (k % 2)) * root_tau_mtd * diff_y_3d[0] * fDiff_const_1 + (1 - 2 * (k / 2 % 2)) * root_tau_mtd * diff_y_3d[2] * fDiff_const_3;
 					}
 					else if (fCase == "Example2") {
-						//hat_y[k] = y_mtd + (1 - 2 * (k % 2)) * root_tau_mtd * diff_y_2d[0] * fDiff_const_1;
 						hat_y[k] = y_mtd + (1 - 2 * (k % 2)) * root_tau_mtd * diff_y_1d;
 					}
 				}
@@ -430,8 +425,6 @@ tuple<ublas::matrix<vector<double>>, ublas::matrix<vector<double>>, ublas::matri
 							+ (1 - 2 * (k / 2 % 2)) * root_tau_0 * diff_y_3d[2] * fDiff_const_3;
 					}
 					else if (fCase == "Example2") {
-						/*hat_x[k] = x_no_drug + (1 - 2 * (k % 2)) * root_tau_0 * diff_x_2d[0] * fDiff_const_1 + (1 - 2 * (k / 2 % 2)) * root_tau_0 * diff_x_2d[1] * fDiff_const_2;
-						hat_y[k] = y_no_drug + (1 - 2 * (k % 2)) * root_tau_0 * diff_y_2d[0] * fDiff_const_1 + (1 - 2 * (k / 2 % 2)) * root_tau_0 * diff_y_2d[1] * fDiff_const_2;*/
 						hat_x[k] = x_no_drug + (1 - 2 * (k % 2)) * root_tau_0 * diff_x_1d;
 						hat_y[k] = y_no_drug + (1 - 2 * (k % 2)) * root_tau_0 * diff_y_1d;
 					}
@@ -471,8 +464,6 @@ tuple<ublas::matrix<vector<double>>, ublas::matrix<vector<double>>, ublas::matri
 							+ (1 - 2 * (k / 2 % 2)) * root_tau_mtd * diff_y_3d[2] * fDiff_const_3;
 					}
 					else if (fCase == "Example2") {
-						/*hat_x[k] = x_mtd + (1 - 2 * (k % 2)) * root_tau_mtd * diff_x_2d[0] * fDiff_const_1 + (1 - 2 * (k / 2 % 2)) * root_tau_mtd * diff_x_2d[1] * fDiff_const_2;
-						hat_y[k] = y_mtd + (1 - 2 * (k % 2)) * root_tau_mtd * diff_y_2d[0] * fDiff_const_1 + (1 - 2 * (k / 2 % 2)) * root_tau_mtd * diff_y_2d[1] * fDiff_const_2;*/
 						hat_x[k] = x_mtd + (1 - 2 * (k % 2)) * root_tau_mtd * diff_x_1d;
 						hat_y[k] = y_mtd + (1 - 2 * (k % 2)) * root_tau_mtd * diff_y_1d;
 					}
@@ -492,16 +483,15 @@ tuple<ublas::matrix<vector<double>>, ublas::matrix<vector<double>>, ublas::matri
 			}
 		}
 	}
-	return make_tuple(sample_x_nodrug, sample_x_mtd, sample_y_nodrug, sample_y_mtd, index_x_nodrug, index_x_mtd, index_y_nodrug, index_y_mtd);
+	//return make_tuple(sample_x_nodrug, sample_x_mtd, sample_y_nodrug, sample_y_mtd, index_x_nodrug, index_x_mtd, index_y_nodrug, index_y_mtd);
 }
 
 
 //--------------------------------Main Solver-----------------------------------
 ublas::matrix<double> CancerSL::MainSolver_by_SL()
 {
+	//int downsample_size = 1;
 	//-------------------------------------Initialization---------------------------------
-
-	//double tol = pow(10, -14); //set up a tolerance to choose one of the two values that are close to each other
 
 	// initialize the matrix of the value function at s=0
 	ublas::matrix<double> Vmat_old(fN + 1, fN + 1);
@@ -540,9 +530,10 @@ ublas::matrix<double> CancerSL::MainSolver_by_SL()
 	 //string filename2 = "strict corrected dval 2D N=1600 s=6 s1=0.5 tol=1e-14.dat";
 	 //io::writeToFile2D<bool>(filename2,policy_mat);
 
-	string filename1 = "test_valuefn_v2_time_rescale.dat";
-	io::writeToFile2D_downsample<double>(filename1, Vmat_old);
-	string filename2 = "test_policy_v2_time_rescale.dat";
+	string filename1 = "test_valuefn.dat";
+	//io::writeToFile2D_downsample<double>(filename1, Vmat_old, downsample_size);
+	io::writeToFile2D<double>(filename1, Vmat_old);
+	string filename2 = "test_policy.dat";
 	io::writeToFile2D<bool>(filename2, policy_mat);
 
 
@@ -571,15 +562,14 @@ ublas::matrix<double> CancerSL::MainSolver_by_SL()
 	auto start = std::chrono::steady_clock::now();
 
 	//pre-compute the coefficients
-	std::tie(sample_x_nodrug, sample_x_mtd, sample_y_nodrug, sample_y_mtd, index_x_nodrug, index_x_mtd, index_y_nodrug, index_y_mtd)
-		= precompute_coeff_2D(q, p);
+	precompute_coeff_2D(q, p, sample_x_nodrug, sample_x_mtd, sample_y_nodrug, sample_y_mtd, index_x_nodrug, index_x_mtd, index_y_nodrug, index_y_mtd);
 
 	// end time of computating all coefficients
 	auto end = std::chrono::steady_clock::now();
 
 	// print out the computational time used for coefficients
 	std::chrono::duration<double> elapsed_seconds = end - start;
-	std::cout << "elapsed time: " << elapsed_seconds.count() << "s\n";
+	std::cout << "Elapsed time for precomputing all coefficients: " << elapsed_seconds.count() << "s\n";
 	//-------------------------------------End of Initialization---------------------------------
 
 
@@ -615,16 +605,11 @@ ublas::matrix<double> CancerSL::MainSolver_by_SL()
 			}
 		}
 
-
-
 		//-------------------Inner loops over the 2D spatial grid-------------------------------------
-		//int max_num_threads = omp_get_max_threads();
-		//cout << max_num_threads << endl;
 
 		#pragma omp parallel for
 		for (int i = index_rec; i < index_death + 1; i++)
 		{
-
 			for (int j = index_start_q; j < fN + 1; j++)
 			{
 				if (j == 0) // on boundary q = 0
@@ -932,14 +917,15 @@ ublas::matrix<double> CancerSL::MainSolver_by_SL()
 	   // save the data for every X slices
 		if (l % fStorage_factor == 0)
 		{
-			io::AppendToFile2D_downsample<double>(filename1, Vmat_old);
+			//io::AppendToFile2D_downsample<double>(filename1, Vmat_old, downsample_size);
+			io::AppendToFile2D<double>(filename1, Vmat_old);
 			io::AppendToFile2D<bool>(filename2, policy_mat);
 		}
-		
+
 		cout << "The current slice is l = " << l << endl;
 		auto end = std::chrono::steady_clock::now();
 		std::chrono::duration<double> elapsed_seconds = end - start;
-		std::cout << "elapsed time: " << elapsed_seconds.count() << "s\n";
+		std::cout << "Elapsed time for the current slice: " << elapsed_seconds.count() << "s\n";
 	}
 
 	return Vmat_old;
