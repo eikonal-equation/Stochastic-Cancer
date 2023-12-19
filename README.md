@@ -7,17 +7,17 @@ This program is free software: you can redistribute it and/or modify it under th
 You should have received a copy of the GNU General Public License along with this program. If not, see http://www.gnu.org/licenses/.
 
 ## Abstract of our manuscript ##
-While adaptive cancer therapy is beginning to prove a promising approach of building evolutionary dynamics into therapeutic scheduling, the stochastic nature of cancer evolution has rarely been incorporated. Various sources of random perturbations can impact the evolution of heterogeneous tumors. In this paper, we propose a method that can effectively select optimal adaptive treatment policies under randomly evolving tumor dynamics based on Stochastic Optimal Control theory. 
+Although adaptive cancer therapy shows promise in integrating evolutionary dynamics into treatment scheduling, the stochastic nature of cancer evolution has seldom been taken into account.
+Various sources of random perturbations can impact the evolution of heterogeneous tumors, making performance metrics of any treatment policy random as well. 
 
-We first construct a stochastic model of cancer dynamics under drug therapy based on Evolutionary Game theory. 
-That model is then used to improve the cumulative "cost", a combination of the total amount of drugs used and the time to recovery. 
-As this cost becomes random in a stochastic setting, we maximize the probability of recovery under a pre-specified cost threshold (or a "budget"). 
-We can achieve our goal for a range of threshold values simultaneously using the tools of dynamic programming.
+In this paper, we propose an efficient method for selecting optimal adaptive treatment policies under randomly evolving tumor dynamics.
+The goal is to improve the cumulative "cost" of treatment, a combination of the total amount of drugs used and the total treatment time. 
+As this cost also becomes random in any stochastic setting, we maximize the probability of reaching the treatment goals (tumor stabilization or eradication) without exceeding a pre-specified threshold (or a "budget"). We use a novel Stochastic Optimal Control formulation and Dynamic Programming to find such ``threshold-aware'' optimal treatment policies. Our approach enables an efficient algorithm to compute these policies for a range of threshold values simultaneously.
 
-We then compare our threshold-aware policies with the policies previously shown to be optimal in the deterministic setting.
-We show that this threshold-awareness yields a significant improvement in the probability of under-the-budget recovery, which is correlated with a lower general drug usage.
-
-The particular model underlying our discussion has originated in [Kaznatcheev2017 et al.](https://www.nature.com/articles/bjc20175), but the presented approach is far more general and provides a new tool for optimizing adaptive therapies based on a broad range of stochastic cancer models.
+Compared to treatment plans shown to be optimal in a deterministic setting, the new "threshold-aware" policies 
+significantly improve the chances of the therapy succeeding under the budget, which is correlated with a lower general drug usage.
+We illustrate this method using stochastic extensions of two specific models developed in [(Kaznatcheev et al. 2017)](https://www.nature.com/articles/bjc20175) and [(Carrère 2017)](https://www.sciencedirect.com/science/article/abs/pii/S0022519316303666),
+but the approach we use is far more general and provides a new tool for optimizing adaptive therapies based on a broad range of stochastic cancer models.
 
 # Manuscript #
 The "Stochastic optimal control to guide adaptive cancer therapy" manuscript can be found [here](https://www.biorxiv.org/content/10.1101/2022.06.17.496649v2).
