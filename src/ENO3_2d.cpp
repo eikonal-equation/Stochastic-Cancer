@@ -214,16 +214,14 @@ double ENO2D::ENO3_interp_2d(const ublas::matrix<double>& aValueMatrix, const in
 		if (abs(D123l) <= abs(D123r))
 		{
 			// if the seond divided difference of the left stencil is less than the one of the right, then choose the left stencil.
-			right_stencil = left_stencil;
-			yright = yleft;
+			right_stencil = left_stencil; yright = yleft;
 			D3 = D3l; D23 = D23l; D123 = D123l;
 			flag = 'l'; // change the flag to be 'l', which stands for the left stencil, if we switch to the left
 			//note that in this case, "yr" computed on line 201 will be added as the last entry in the 4-pt right stencil in the next stage
 		}
 		else // otherwise, choose the right stencil
 		{
-			left_stencil = right_stencil;
-			yleft = yright;
+			left_stencil = right_stencil; yleft = yright;
 			D3 = D3r; D23 = D23r; D123 = D123r;
 			//note that in this case, "yl" computed on line 199 will be added as the last entry in the 4-pt left stencil in the next stage
 		}

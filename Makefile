@@ -9,7 +9,7 @@ TEST =
 CPPFILES = $(SRC)main.cpp \
 				$(SRC)ENO3_1d.cpp \
 				$(SRC)ENO3_2d.cpp \
-				$(SRC)SemiLagrangian_Cancer.cpp \
+				$(SRC)Solver_SL.cpp \
 
 main: $(CPPFILES)
 	$(CC) $(CXXFLAGS) -o $@ $^ $(INCLUDE) $(LIB)
