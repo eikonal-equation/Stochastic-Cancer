@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Stochastic cancer error plots">
+    <meta name="author" content="MingYi Wang">
+    <!--     <link rel="icon" href="../../../../favicon.ico"> -->
+
+    <title>Threshold-awareness in adaptive cancer therapy</title>
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <!-- Custom styles for this template -->
+    <!-- <link href="starter-template.css" rel="stylesheet"> -->
+    <link href="album.css" rel="stylesheet">
+
+    <!-- <link rel="SHORTCUT ICON" href="imgs/favicon.ico"> -->
+</head>
+
+<body>
+
+    <header>
+        <!-- Fixed navbar -->
+        <nav class="navbar navbar-expand-md navbar-dark fixed-top" id="nav1">
+            <a class="navbar-brand" href="#">Optimal Cancer Therapy Under Stochasticity</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="btn btn-outline-light navbar-btn" href="#">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-outline-light navbar-btn" href="examples.html">Examples &amp; Movies</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="btn btn-outline-light navbar-btn" href="#">Convergence Plots<span class="sr-only">(current)</span></a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Begin page content -->
+    <main role="main" class="container">
+        <section class="jumbotron text-left">
+            <div class="container">
+                <h1 class="jumbotron-heading">Error plots under grid refinement </h1>
+                <div class="container bg-light">
+                    <p>
+                        Here, we present numerical evidence of the convergence of the value function under grid refinement. <br>
+
+                        To estimate the error, we treat the numerical solution \(v^*(q,p,s)\)
+                        computed on a fine grid \((N_q,N_p)=(3201,3201)\) as the "ground truth". <br> \(\Big( \) with \(\Delta s = 5.0 \times 10^{-4}\) in Example 1 and \(\Delta s = 1.25 \times 10^{-4}\)  in Example 2. \(\Big)\)<br>
+
+                        We then measure how much the numerical solution on coarser grids deviates from the ground truth.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <h3> \(L_1\)-Error </h3>
+        <div class="container bg-light">
+            Let \(N_{\mathrm{tot}}\) denote the total number of points of the grid.
+            <ul>
+                <li>
+                    We show the discrete \(l_1\)-error \(\frac{1}{N_{\mathrm{tot}}} \sum_{q,p,s}|v(q,p,s)−v^*(q,p,s)|\)
+                    as a function of the grid refinement.
+                </li>
+            </ul>
+            <strong>In all of the following figures,</strong>
+            <ul>
+                <li>
+                    We plot the error as a function of \(\Delta s\) indicating the grid refinement. In fact, \(\Delta q\) and \(\Delta p\) both change proportionally to \(\Delta s\) in the refinement study.
+                </li>
+                <li>
+                    The <em>solid red line</em> is the \(l_1\)-error while the <em>dashed black line</em> is the slope-1 (linear convergence) reference line
+                    in the log-log space.
+                </li>
+            </ul>
+        </div>
+
+        <div class="container bg-light">
+            <p>
+                <div class="album py-2 bg-light">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
+                                <div class="card mt-6 shadow-sm">
+                                    <div class="card-body">
+                                        <h6 class="card-text">For Example 1 (EGT-based model):</h6>
+                                        <img src="figures/EG1_L1_ERR.png" class="card-img-top" alt="Image Alt Text">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="card mb-6 shadow-sm">
+                                    <div class="card-body">
+                                        <h6 class="card-text">For Example 2 (Sensitive-Resistant model):</h6>
+                                        <img src="figures/EG2_L1_ERR.png" class="card-img-top" alt="Image Alt Text">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </p>
+        </div>
+
+        <h3> \(L_\infty\)-Error </h3>
+        <div class="container bg-light">
+            <ul>
+                <li>
+                    We also show the discrete \(l_\infty\)-error \( \; \max_{q,p,s} |v(q,p,s)−v^*(q,p,s)| \; \)
+                    as a function of the grid refinement.
+                </li>
+            </ul>
+            <strong>In all of the following figures,</strong>
+            <ul>
+                <li>
+                    We plot the error as a function of \(\Delta s\) indicating the grid refinement. In fact, \(\Delta q\) and \(\Delta p\) both change proportionally to \(\Delta s\) in the refinement study.
+                </li>
+                <li>
+                    The <em>solid red line</em> is the \(l_1\)-error while the <em>dashed black line</em> is the slope-1 (linear convergence) reference line
+                    in the log-log space.
+                </li>
+            </ul>
+        </div>
+
+        <div class="container bg-light">
+            <p>
+                <div class="album py-2 bg-light">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
+                                <div class="card mt-6 shadow-sm">
+                                    <div class="card-body">
+                                        <h6 class="card-text">For Example 1 (EGT-based model):</h6>
+                                        <img src="figures/EG1_Linf_ERR.png" class="card-img-top" alt="Image Alt Text">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="card mb-6 shadow-sm">
+                                    <div class="card-body">
+                                        <h6 class="card-text">For Example 2 (Sensitive-Resistant model):</h6>
+                                        <img src="figures/EG2_Linf_ERR.png" class="card-img-top" alt="Image Alt Text">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </p>
+        </div>
+
+
+    </main>
+
+    <footer class="text-muted">
+        <div class="container">
+            <h6>Disclaimer</h6>
+            <p class="text-muted">
+                This report was prepared as an account of work sponsored by an agency of the United States Government. Neither the United States Government nor any agency thereof, nor any of their employees, makes any warranty, express or implied, or assumes any legal liability or responsibility for the accuracy, completeness, or usefulness of any information, apparatus, product, or process disclosed, or represents that its use would not infringe privately owned rights. Reference herein to any specific commercial product, process, or service by trade name, trademark, manufacturer, or otherwise does not necessarily constitute or imply its endorsement, recommendation, or favoring by the United States Government or any agency thereof. The views and opinions of authors expressed herein do not necessarily state or reflect those of the United States Government or any agency thereof.
+            </p>
+            <h6>Copyright Notice</h6>
+            <p"> The documents contained in these directories are included by the contributing authors as a means to ensure timely dissemination of scholarly and technical work on a non-commercial basis. Copyright and all rights therein are maintained by the authors or by other copyright holders, notwithstanding that they have offered their works here electronically. It is understood that all persons copying this information will adhere to the terms and constraints invoked by each author's copyright. These works may not be reposted without the explicit permission of the copyright holder. </p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+    <!-- MathJax files -->
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});</script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>
