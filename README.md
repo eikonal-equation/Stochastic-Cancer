@@ -12,12 +12,14 @@ Various sources of random perturbations can impact the evolution of heterogeneou
 
 In this paper, we propose an efficient method for selecting optimal adaptive treatment policies under randomly evolving tumor dynamics.
 The goal is to improve the cumulative "cost" of treatment, a combination of the total amount of drugs used and the total treatment time. 
-As this cost also becomes random in any stochastic setting, we maximize the probability of reaching the treatment goals (tumor stabilization or eradication) without exceeding a pre-specified threshold (or a "budget"). We use a novel Stochastic Optimal Control formulation and Dynamic Programming to find such ``threshold-aware'' optimal treatment policies. Our approach enables an efficient algorithm to compute these policies for a range of threshold values simultaneously.
+As this cost also becomes random in any stochastic setting, we maximize the probability of reaching the treatment goals (tumor stabilization or eradication)
+without exceeding a pre-specified threshold (or a "budget"). 
+We use a novel Stochastic Optimal Control formulation and Dynamic Programming to find such "threshold-aware" optimal treatment policies.
+Our approach enables an efficient algorithm to compute these policies for a range of threshold values simultaneously.
 
 Compared to treatment plans shown to be optimal in a deterministic setting, the new "threshold-aware" policies 
 significantly improve the chances of the therapy succeeding under the budget, which is correlated with a lower general drug usage.
-We illustrate this method using stochastic extensions of two specific models developed in [(Kaznatcheev et al. 2017)](https://www.nature.com/articles/bjc20175) and [(Carrère 2017)](https://www.sciencedirect.com/science/article/abs/pii/S0022519316303666),
-but the approach we use is far more general and provides a new tool for optimizing adaptive therapies based on a broad range of stochastic cancer models.
+We illustrate this method using two specific examples, but our approach is far more general and provides a new tool for optimizing adaptive therapies based on a broad range of stochastic cancer models.
 
 # Manuscript #
 The "Stochastic optimal control to guide adaptive cancer therapy" manuscript can be found [here](https://www.biorxiv.org/content/10.1101/2022.06.17.496649v2).
