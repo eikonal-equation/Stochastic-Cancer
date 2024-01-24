@@ -50,31 +50,29 @@
             <div class="container">
                 <h1 class="jumbotron-heading">Threshold-aware policy/value function evolution movies</h1>
                 <div class="container bg-light">
-                    <p>These supplemental movies correspond to Figure 3 of the following paper: </p>
+                    <p>These supplemental movies correspond to Figures 3 and 6 of the following paper: </p>
                     <p><a class="btn btn-secondary" href="https://www.biorxiv.org/content/10.1101/2022.06.17.496649v2" target="_blank" role="button">View manuscript on bioRxiv &raquo;</a></p>
-                    <p>And Figure 8 of its Supplementary Materials: </p>
+                    <p>And Figure 11 of its Supplementary Materials: </p>
                     <p><a class="btn btn-secondary" href="https://www.biorxiv.org/content/10.1101/2022.06.17.496649v2.supplementary-material" target="_blank" role="button">View the Supplementary Materials on bioRxiv &raquo;</a></p>
                 </div>
             </div>
         </section>
 
         <h2>Moives for Example 1 (EGT-based model): </h2>
-        <div class="container bg-light">
-            <p>
-                Both of the following two examples are
-                <ul>
-                    <li> Solved on a 1601×1601×6001 grid in \((q,p,s)\) space;</li>
-                    <li> Starting with \(\bar{\mathcal{S}} = 6\).</li>
-                </ul>
-            </p>
-        </div>
-
-
         <div class="album py-md-3 bg-light">
+            <div class="container bg-light">
+                <p>
+                    Both of the following two sub-examples are
+                    <ul>
+                        <li> Solved on a 1601×1601×6001 grid in \((q,p,s)\) space;</li>
+                        <li> Starting with \(\bar{\mathcal{S}} = 6\).</li>
+                    </ul>
+                </p>
+            </div>
             <div class="container">
                 <div class="card w-100 h-75">
                     <div class="card-body">
-                        <h4 class="card-text">Case 1 (small diffusion, Figure 3 in the main text):</h4>
+                        <h4 class="card-text">Case 1 (small diffusion, Fig.3 in the main text):</h4>
                         <ul>
                             <li>
                                 \(\sigma_G = \sigma_D = \sigma_V = 0.15\)
@@ -89,7 +87,7 @@
                 </div>
                 <div class="card w-100 h-75">
                     <div class="card-body">
-                        <h4 class="card-text"> Case 2 (large diffusion, Figure 11 in the Supplementary Materials):</h4>
+                        <h4 class="card-text"> Case 2 (large diffusion, Fig.11 in the Supplementary Materials):</h4>
                         <ul>
                             <li>\(\sigma_G = \sigma_D = \sigma_V = 0.5\)</li>
                         </ul>
@@ -102,13 +100,49 @@
                 </div>
             </div>
         </div>
-        <div class="container bg-light">
+
+        <br>
+
+        <h2>Moive for Example 2 (SR model): </h2>
+        <div class="album py-md-3 bg-light">
+            <div class="container bg-light">
+                <p>
+                    The following sub-example is
+                    <ul>
+                        <li> Solved on a 3201×3201×48001 grid in \((q,p,s)\) space;</li>
+                        <li> Starting with \(\bar{\mathcal{S}} = 90\).</li>
+                    </ul>
+                </p>
+            </div>
+            <div class="container">
+                <div class="card w-100 h-75">
+                    <div class="card-body">
+                        <h4 class="card-text">Case 1 (Fig.6 in the main text):</h4>
+                        <ul>
+                            <li>
+                                \(\sigma_S = \sigma_R = 0.15\)
+                            </li>
+                        </ul>
+                        <div class="embed-responsive embed-responsive-16by9">
+                            <video controls class="embed-responsive-item">
+                                <source src="movies/movie_SR_valfn.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <br>
+
+        <div class="container">
             <p>
                 <a class="btn btn-secondary" href="examples.html" role="button">&laquo; Return to Examples &amp; Movies page</a>
                 <a class="btn btn-secondary" href="sample-paths.html" role="button">Go to sample paths visualizations &raquo;</a>
             </p>
         </div>
     </main>
+
     <footer class="text-muted">
         <div class="container">
             <h6>Disclaimer</h6>

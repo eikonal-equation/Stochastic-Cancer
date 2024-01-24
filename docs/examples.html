@@ -49,7 +49,7 @@
 
         <section class="jumbotron text-left">
             <div class="container">
-                <h1 class="jumbotron-heading">Examples of Optimal Adaptive Cancer Therapy in a Stochastic Setting </h1>
+                <h1 class="jumbotron-heading">Numerical examples of threshold-awareness in adaptive cancer therapy </h1>
                 <div class="container bg-light">
                     <p>These examples are from the following paper: </p>
                     <p><a class="btn btn-secondary" href="https://www.biorxiv.org/content/10.1101/2022.06.17.496649v2" target="_blank" role="button">View manuscript on bioRxiv &raquo;</a></p>
@@ -58,9 +58,9 @@
                 </div>
             </div>
         </section>
-        <div>
+        <div class="container bg-light">
             <p>
-                All of the computations/examples use the following parameters:
+                <b>Parameter values for Example 1 (EGT-based model):</b>
                 <ul>
                     <li>Benefit per unit of acidification: \(b_a = 2.5\) </li>
                     <li>Benefit from the oxygen per unit of vascularization: \(b_v = 2\) </li>
@@ -68,8 +68,28 @@
                     <li>Number of cells in the interaction group: \((n+1) = 5\) </li>
                     <li>Maximum tolerated doses: \(d_{max} = 3\)  </li>
                     <li>Treatment time penalty: \(\delta = 0.05\) </li>
-                    <li>Recovery barrier: \(r_b = 0.01\) </li>
-                    <li>Failure barrier: \(1 - f_b = 0.99\) </li>
+                    <li>Stabilization barrier: \(\gamma_r = 0.01\) </li>
+                    <li>Failure barrier: \(\gamma_f = 0.99\) </li>
+                </ul>
+            </p>
+        </div>
+
+        <br />
+
+        <div class="container bg-light">
+            <p>
+                <b>Parameter values for Example 2 (SR model):</b>
+                <ul>
+                    <li>Carrying capacity of the Petri dish: \(C = 4.8 \times 10^6\) cells </li>
+                    <li>Size ratio between S and R cells: \(m = 30\) </li>
+                    <li>Intrinsic growth rate of the Sensitive: \(g_S = 0.031 \; \mathrm{h}^{-1}\)  </li>
+                    <li>Intrinsic growth rate of the Resistant: \(g_R = 0.026 \; \mathrm{h}^{-1}\) </li>
+                    <li>Maximum tolerated doses: \(d_{max} = 3\)  </li>
+                    <li>Treatment time penalty: \(\delta = 0.05\) </li>
+                    <li>Drug efficiency: \(\alpha = 0.06 \; \mathrm{nM \cdot h}^{-1}\) </li>
+                    <li>Action of sensitive on resistant: \(\beta = 6.25 \times 10^{-7} \; \mathrm{cells \cdot h}^{-1}\) </li>
+                    <li>Remission barrier: \(\gamma_r = 0.01\) </li>
+                    <li>Failure barrier: \(\gamma_f = 0.99\) </li>
                 </ul>
             </p>
         </div>
