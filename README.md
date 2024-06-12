@@ -22,7 +22,7 @@ significantly improve the chances of the therapy succeeding under the budget, wh
 We illustrate this method using two specific examples, but our approach is far more general and provides a new tool for optimizing adaptive therapies based on a broad range of stochastic cancer models.
 
 # Manuscript #
-The "Threshold-awareness in adaptive cancer therapy" manuscript can be found [here](https://www.biorxiv.org/content/10.1101/2022.06.17.496649v2).
+The "Threshold-awareness in adaptive cancer therapy" manuscript can be found [here](https://www.biorxiv.org/content/10.1101/2022.06.17.496649v3).
 
 # Contributions & Acknowledgements # 
   * The problem statement, the specific stochastic cancer dynamics, and the numerical scheme were developed by MingYi Wang, Jacob Scott, and Alexander Vladimirsky.
